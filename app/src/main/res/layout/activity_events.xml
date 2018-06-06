@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EventsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/eventsActivityToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/eventsActivityTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabTextColor="@android:color/black">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/firstTabItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yesterday"/>
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/secondTabItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today"/>
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/thirdTabItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tomorrow"/>
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/eventsActivityViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
