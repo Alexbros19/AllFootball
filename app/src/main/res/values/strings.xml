@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RecyclerViewAllGoals</string>
+    <string name="app_name">AllFootball</string>
     <string name="time_value">17:00</string>
     <string name="team_name">Team</string>
     <string name="score_value">- : -</string>

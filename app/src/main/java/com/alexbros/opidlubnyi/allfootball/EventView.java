@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 
 public class EventView extends LinearLayout {
+    private TextView time;
     private TextView firstTeamNameText;
     private TextView secondTeamNameText;
 
@@ -28,12 +29,13 @@ public class EventView extends LinearLayout {
 
     private void init(Context context) {
         inflate(context, R.layout.fragment_event_list, this);
-
+        time = findViewById(R.id.timeText);
         firstTeamNameText = findViewById(R.id.firstTeamName);
         secondTeamNameText = findViewById(R.id.secondTeamName);
     }
 
     public void setElement(ListElement listElement) {
+        time.setText(Constants.TIME);
         firstTeamNameText.setText(listElement.getFirstTeamName());
         secondTeamNameText.setText(listElement.getSecondTeamName());
     }
