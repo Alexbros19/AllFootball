@@ -6,9 +6,12 @@ import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 public class EventsActivity extends AppCompatActivity {
 
@@ -19,6 +22,8 @@ public class EventsActivity extends AppCompatActivity {
     TabItem thirdTabItem;
     ViewPager viewPager;
     EventsPageAdapter eventsPageAdapter;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -26,9 +31,16 @@ public class EventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
 
-//        toolbar = findViewById(R.id.eventsActivityToolbar);
-//        toolbar.setTitle("");
-//        setSupportActionBar(toolbar);
+        toolbar = findViewById(R.id.navigation_toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer);
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tabLayout = findViewById(R.id.eventsActivityTabLayout);
         firstTabItem = findViewById(R.id.firstTabItem);
@@ -60,5 +72,10 @@ public class EventsActivity extends AppCompatActivity {
             }
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return actionBarDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 }
