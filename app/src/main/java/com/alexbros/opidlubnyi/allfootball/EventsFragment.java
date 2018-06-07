@@ -3,10 +3,10 @@ package com.alexbros.opidlubnyi.allfootball;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,11 +17,9 @@ import java.util.List;
 
 public class EventsFragment extends Fragment {
 
-    private View view;
     private View progressBar;
     private RecyclerView recyclerView;
     private EventsListAdapter eventsListAdapter;
-    private List<ListElement> eventsList;
     private static Bundle bundleRecyclerViewState;
     private ParsingJsonHelper parsingJsonHelper = null;
 
@@ -31,20 +29,20 @@ public class EventsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        view = inflater.inflate(R.layout.fragment_events, container, false);
+        View view = inflater.inflate(R.layout.fragment_events, container, false);
 
         recyclerView = view.findViewById(R.id.eventsList);
         progressBar = view.findViewById(R.id.progressBar);
-        eventsListAdapter = new EventsListAdapter(getContext(), eventsList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        eventsListAdapter = new EventsListAdapter(getContext());
         recyclerView.setAdapter(eventsListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getActivity(), linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         return view;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
