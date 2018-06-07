@@ -7,16 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.EventsViewHolder> {
+public class EventsListAdapter extends RecyclerView.Adapter {
 
     private Context context;
-    private List<ListElement> listElements;
+    private List<ListElement> listElements = new ArrayList();
 
-    public EventsListAdapter(Context context, List<ListElement> listElements) {
+    EventsListAdapter(Context context) {
         this.context = context;
-        this.listElements = listElements;
     }
 
     public void setData(List<ListElement> listElements) {
@@ -26,17 +26,17 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Ev
 
     @NonNull
     @Override
-    public EventsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_event_list_item, parent, false);
         return new EventsViewHolder(row);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EventsListAdapter.EventsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final ListElement listElement = listElements.get(position);
 
-        holder.eventView.setElement(listElement);
-        holder.eventView.setOnClickListener(new View.OnClickListener() {
+        ((EventsViewHolder) holder).eventView.setElement(listElement);
+        ((EventsViewHolder) holder).eventView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Intent intent = new Intent(EventsListActivity.this, ButtonsContextActivity.class);
