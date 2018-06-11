@@ -1,6 +1,8 @@
 package com.alexbros.opidlubnyi.allfootball;
 
 import android.content.Context;
+import android.content.Intent;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,9 +41,9 @@ public class EventsListAdapter extends RecyclerView.Adapter {
         ((EventsViewHolder) holder).eventView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(EventsListActivity.this, ButtonsContextActivity.class);
-//                intent.putExtra(SyncStateContract.Constants.BUTTONS_CONTEXT_ACTIVITY_PARAM, listElement);
-//                startActivity(intent);
+                Intent intent = new Intent(context, EventContextActivity.class);
+                intent.putExtra(Constants.BUTTONS_CONTEXT_ACTIVITY_PARAM, listElement);
+                context.startActivity(intent);
             }
         });
     }
