@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/flag_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ukraine_flag"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:id="@+id/all_events_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/flag_image"
+            android:layout_toLeftOf="@id/arrow_image"
+            android:text="All Events"
+            android:textSize="15dp"
+            android:textColor="#000"
+            android:layout_toEndOf="@+id/flag_image"
+            android:layout_toStartOf="@id/arrow_image" />
+
+        <ImageView
+            android:id="@+id/arrow_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_expand_more_black_48dp"
+            android:layout_margin="10dp"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
