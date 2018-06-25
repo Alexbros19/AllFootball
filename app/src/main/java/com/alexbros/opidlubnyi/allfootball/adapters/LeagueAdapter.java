@@ -20,14 +20,6 @@ import java.util.List;
 
 public class LeagueAdapter extends ExpandableRecyclerViewAdapter<LeagueViewHolder, EventViewHolder> {
 
-    private Context context;
-    private List<ListElement> listElements = new ArrayList();
-
-    public void setData(List<ListElement> listElements) {
-        this.listElements = listElements;
-        notifyDataSetChanged();
-    }
-
     public LeagueAdapter(List<? extends ExpandableGroup> groups) {
         super(groups);
     }
@@ -47,17 +39,11 @@ public class LeagueAdapter extends ExpandableRecyclerViewAdapter<LeagueViewHolde
     @Override
     public void onBindChildViewHolder(EventViewHolder holder, int flatPosition, ExpandableGroup group, int childIndex) {
         ListElement listElement = (ListElement) group.getItems().get(childIndex);
-//        holder.setTeamTitle(listElement.getFirstTeamName(), listElement.getSecondTeamName());
-        holder.eventView.setElement(listElement);
+        holder.setTeamTitle(listElement.getTimeTextView(), listElement.getFirstTeamName(), listElement.getSecondTeamName());
     }
 
     @Override
     public void onBindGroupViewHolder(LeagueViewHolder holder, int flatPosition, ExpandableGroup group) {
         holder.setLeagueTitle(group.getTitle());
-    }
-
-    @Override
-    public int getItemCount() {
-        return listElements.size();
     }
 }
