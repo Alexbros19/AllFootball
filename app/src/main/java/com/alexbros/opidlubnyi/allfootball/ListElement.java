@@ -9,10 +9,10 @@ public class ListElement implements Serializable {
     public ListElement() {
     }
 
-    public ListElement(String firstTeamName, String secondTeamName) {
-        this.firstTeamName = firstTeamName;
-        this.secondTeamName = secondTeamName;
-    }
+//    public ListElement(String firstTeamName, String secondTeamName) {
+//        this.firstTeamName = firstTeamName;
+//        this.secondTeamName = secondTeamName;
+//    }
 
     public void setFirstTeamName(String firstTeamName){ this.firstTeamName = firstTeamName; }
     public String getFirstTeamName(){ return firstTeamName; }

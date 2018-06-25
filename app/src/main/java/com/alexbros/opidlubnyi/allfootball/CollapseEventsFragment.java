@@ -1,6 +1,7 @@
 package com.alexbros.opidlubnyi.allfootball;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,8 @@ public class CollapseEventsFragment extends Fragment {
     private LeagueAdapter leagueAdapter;
     private List<League> leagueList;
     private View progressBar;
+    private static Bundle bundleRecyclerViewState;
+    private ParsingJsonHelper parsingJsonHelper = null;
 
     @Nullable
     @Override
@@ -32,7 +35,7 @@ public class CollapseEventsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.eventsList);
         progressBar = view.findViewById(R.id.progressBar);
 
-        setLeagueList();
+//        setLeagueList();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -46,19 +49,70 @@ public class CollapseEventsFragment extends Fragment {
         return view;
     }
 
-    public void setLeagueList() {
+//    public void setLeagueList() {
+//        progressBar.setVisibility(View.GONE);
+//        recyclerView.setVisibility(View.VISIBLE);
+//
+//        leagueList = new ArrayList<>(1);
+//        for (int i = 0; i < 1; i++) {
+//            List<ListElement> listElements = new ArrayList<>(5);
+//            listElements.add(new ListElement("team " + i + 1, "team " + i + 2));
+//            listElements.add(new ListElement("team " + i + 1, "team " + i + 2));
+//            listElements.add(new ListElement("team " + i + 1, "team " + i + 2));
+//            listElements.add(new ListElement("team " + i + 1, "team " + i + 2));
+//            listElements.add(new ListElement("team " + i + 1, "team " + i + 2));
+//            leagueList.add(new League("All Leagues", listElements));
+//        }
+//    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        bundleRecyclerViewState = new Bundle();
+        Parcelable listState = recyclerView.getLayoutManager().onSaveInstanceState();
+        bundleRecyclerViewState.putParcelable(Constants.KEY_RECYCLER_STATE, listState);
+
+        if (parsingJsonHelper != null)
+            parsingJsonHelper.cancel(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (bundleRecyclerViewState != null) {
+            Parcelable listState = bundleRecyclerViewState.getParcelable(Constants.KEY_RECYCLER_STATE);
+            recyclerView.getLayoutManager().onRestoreInstanceState(listState);
+        }
+
+        // TODO: start AsyncTask here
+        parsingJsonHelper = new ParsingJsonHelper(new ParsingJsonHelper.OnDataListener() {
+            @Override
+            public void onReceived(List<ListElement> list) {
+                setData(list);
+
+                leagueAdapter = new LeagueAdapter(leagueList);
+                recyclerView.setAdapter(leagueAdapter);
+            }
+        });
+        parsingJsonHelper.execute(Constants.URL);
+    }
+
+    public void setData(List<ListElement> listElems) {
+
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
 
         leagueList = new ArrayList<>(1);
         for (int i = 0; i < 1; i++) {
-            List<ListElement> listElements = new ArrayList<>(5);
-            listElements.add(new ListElement("team " + i + 1, "team " + i + 2));
-            listElements.add(new ListElement("team " + i + 1, "team " + i + 2));
-            listElements.add(new ListElement("team " + i + 1, "team " + i + 2));
-            listElements.add(new ListElement("team " + i + 1, "team " + i + 2));
-            listElements.add(new ListElement("team " + i + 1, "team " + i + 2));
+            List<ListElement> listElements = new ArrayList<>(listElems.size());
+
+            for (int j = 0; j < listElems.size() - 1; j++) {
+                listElements.add(new ListElement());
+            }
+
             leagueList.add(new League("All Leagues", listElements));
         }
+//        leagueAdapter.setData(listElems);
     }
 }
