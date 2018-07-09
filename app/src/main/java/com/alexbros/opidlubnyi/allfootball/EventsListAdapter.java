@@ -26,6 +26,12 @@ public class EventsListAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public void updateFilteredData(List<ListElement> newList) {
+        listElements = new ArrayList<>();
+        listElements.addAll(newList);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
