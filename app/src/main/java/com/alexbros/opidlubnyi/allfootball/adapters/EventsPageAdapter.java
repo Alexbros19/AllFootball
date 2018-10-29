@@ -1,8 +1,11 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.alexbros.opidlubnyi.allfootball.CollapseEventsFragment;
+import com.alexbros.opidlubnyi.allfootball.EventsFragment;
 
 public class EventsPageAdapter extends FragmentPagerAdapter {
 

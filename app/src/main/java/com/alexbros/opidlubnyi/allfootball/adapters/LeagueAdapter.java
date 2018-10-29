@@ -1,13 +1,9 @@
 package com.alexbros.opidlubnyi.allfootball.adapters;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alexbros.opidlubnyi.allfootball.EventView;
-import com.alexbros.opidlubnyi.allfootball.EventsListAdapter;
 import com.alexbros.opidlubnyi.allfootball.ListElement;
 import com.alexbros.opidlubnyi.allfootball.R;
 import com.alexbros.opidlubnyi.allfootball.viewholders.EventViewHolder;
@@ -15,7 +11,6 @@ import com.alexbros.opidlubnyi.allfootball.viewholders.LeagueViewHolder;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueAdapter extends ExpandableRecyclerViewAdapter<LeagueViewHolder, EventViewHolder> {
