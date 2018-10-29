@@ -1,6 +1,9 @@
 package com.alexbros.opidlubnyi.allfootball;
 
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,12 +13,14 @@ import java.util.List;
 public class ParsingJsonHelper extends AsyncTask<String, Void, List<ListElement>> {
 
     private OnDataListener onDataListener;
+    private Handler endHandler;
 
     interface OnDataListener {
         void onReceived(List<ListElement> list);
     }
 
-    public ParsingJsonHelper(OnDataListener onDataListener) {
+    ParsingJsonHelper(Handler endHandler, OnDataListener onDataListener) {
+        this.endHandler = endHandler;
         this.onDataListener = onDataListener;
     }
 
@@ -40,12 +45,15 @@ public class ParsingJsonHelper extends AsyncTask<String, Void, List<ListElement>
                 for(int i = 0; i < leagues.length(); i++) {
                     JSONObject leaguesJSONObject = leagues.getJSONObject(i);
                     JSONArray events = leaguesJSONObject.getJSONArray("events");
+                    listElement = new ListElement();
 
                     for(int j = 0; j < events.length(); j++) {
                         JSONObject eventsJSONObject = events.getJSONObject(j);
                         JSONArray participants = eventsJSONObject.getJSONArray("participants");
 
-                        listElement = new ListElement();
+                        listElement.setStatusId(eventsJSONObject.getLong("statusId"));
+                        listElement.setMinute(eventsJSONObject.getString("minute"));
+
                         for(int k = 0; k < participants.length(); k++) {
                             JSONObject participantsJSONObject = participants.getJSONObject(k);
                             if(k == 0)
@@ -71,8 +79,25 @@ public class ParsingJsonHelper extends AsyncTask<String, Void, List<ListElement>
         return list;
     }
 
+    private int checkEventIsRunning(List<ListElement> list) {
+        for (ListElement event : list) {
+            if (event.isRunning()) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
     @Override
     protected void onPostExecute(List<ListElement> list) {
         onDataListener.onReceived(list);
+
+
+        if (endHandler != null) {
+            Message msg = new Message();
+            msg.arg2 = checkEventIsRunning(list);
+            msg.what = Constants.RESULT_OK;
+            endHandler.sendMessage(msg);
+        }
     }
 }

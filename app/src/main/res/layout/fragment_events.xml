@@ -19,9 +19,15 @@
             android:layout_width="50dp" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/eventsList"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/eventsListSwipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/eventsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

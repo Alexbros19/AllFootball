@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.alexbros.opidlubnyi.allfootball.adapters.EventsPageAdapter;
+
 public class EventsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
