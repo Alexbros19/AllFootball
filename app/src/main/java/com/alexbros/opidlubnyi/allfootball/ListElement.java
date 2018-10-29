@@ -10,6 +10,7 @@ public class ListElement implements Serializable {
     private String secondTeamName;
     private String minute;
     private long statusId;
+    private long utcStartTime;
 
     public ListElement() {
     }
@@ -44,8 +45,16 @@ public class ListElement implements Serializable {
     public void setStatusId(long statusId) {
         this.statusId = statusId;
     }
-
+    // Check if event is running
     public boolean isRunning() {
         return ((this.statusId & STATUS_RUNNING.getFlag()) != 0);
+    }
+
+    public long getUtcStartTime() {
+        return utcStartTime;
+    }
+
+    public void setUtcStartTime(long utcStartTime) {
+        this.utcStartTime = utcStartTime;
     }
 }

@@ -53,6 +53,7 @@ public class ParsingJsonHelper extends AsyncTask<String, Void, List<ListElement>
 
                         listElement.setStatusId(eventsJSONObject.getLong("statusId"));
                         listElement.setMinute(eventsJSONObject.getString("minute"));
+                        listElement.setUtcStartTime(eventsJSONObject.getLong("utcStartTime"));
 
                         for(int k = 0; k < participants.length(); k++) {
                             JSONObject participantsJSONObject = participants.getJSONObject(k);
