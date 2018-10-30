@@ -11,6 +11,8 @@ public class ListElement implements Serializable {
     private String minute;
     private long statusId;
     private long utcStartTime;
+    private String teamOneId;
+    private String teamTwoId;
 
     public ListElement() {
     }
@@ -56,5 +58,21 @@ public class ListElement implements Serializable {
 
     public void setUtcStartTime(long utcStartTime) {
         this.utcStartTime = utcStartTime;
+    }
+
+    public String getTeamOneId() {
+        return teamOneId;
+    }
+
+    public void setTeamOneId(String teamOneId) {
+        this.teamOneId = teamOneId;
+    }
+
+    public String getTeamTwoId() {
+        return teamTwoId;
+    }
+
+    public void setTeamTwoId(String teamTwoId) {
+        this.teamTwoId = teamTwoId;
     }
 }
