@@ -45,11 +45,11 @@ public class ParsingJsonHelper extends AsyncTask<String, Void, List<ListElement>
                 for(int i = 0; i < leagues.length(); i++) {
                     JSONObject leaguesJSONObject = leagues.getJSONObject(i);
                     JSONArray events = leaguesJSONObject.getJSONArray("events");
-                    listElement = new ListElement();
 
                     for(int j = 0; j < events.length(); j++) {
                         JSONObject eventsJSONObject = events.getJSONObject(j);
                         JSONArray participants = eventsJSONObject.getJSONArray("participants");
+                        listElement = new ListElement();
 
                         listElement.setStatusId(eventsJSONObject.getLong("statusId"));
                         listElement.setMinute(eventsJSONObject.getString("minute"));
