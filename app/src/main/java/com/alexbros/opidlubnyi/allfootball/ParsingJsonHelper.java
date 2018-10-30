@@ -57,10 +57,13 @@ public class ParsingJsonHelper extends AsyncTask<String, Void, List<ListElement>
 
                         for(int k = 0; k < participants.length(); k++) {
                             JSONObject participantsJSONObject = participants.getJSONObject(k);
-                            if(k == 0)
+                            if (k == 0) {
                                 listElement.setFirstTeamName(participantsJSONObject.getString("name"));
-                            else
+                                listElement.setTeamOneId(participantsJSONObject.getString("id"));
+                            } else {
                                 listElement.setSecondTeamName(participantsJSONObject.getString("name"));
+                                listElement.setTeamTwoId(participantsJSONObject.getString("id"));
+                            }
                         }
                         list.add(listElement);
                     }
