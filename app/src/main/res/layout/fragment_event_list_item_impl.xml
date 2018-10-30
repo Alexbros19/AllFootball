@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.alexbros.opidlubnyi.allfootball.views.EventLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/eventLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground">
+
+    <View
+        android:id="@+id/matchBarView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.alexbros.opidlubnyi.allfootball.views.EventStatusView
+            android:id="@+id/statusTextView"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:layout_width="38dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/homeTeamTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toStartOf="@+id/homeTeamImageView"
+            android:layout_toLeftOf="@+id/homeTeamImageView"
+            android:layout_toEndOf="@+id/statusTextView"
+            android:layout_toRightOf="@+id/statusTextView"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="end"
+            android:textSize="@dimen/textSizeMedium"
+            tools:text="Team one" />
+
+        <ImageView
+            android:id="@+id/homeTeamImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toStartOf="@+id/scoreTextView"
+            android:layout_toLeftOf="@+id/scoreTextView"
+            tools:src="@drawable/team_logo_unknown" />
+
+        <TextView
+            android:id="@+id/scoreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="5dp"
+            android:textSize="@dimen/textSizeLarge"
+            android:text="-:-"
+            tools:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/awayTeamImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toEndOf="@+id/scoreTextView"
+            android:layout_toRightOf="@+id/scoreTextView"
+            tools:src="@drawable/team_logo_unknown" />
+
+        <TextView
+            android:id="@+id/awayTeamTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@+id/awayTeamImageView"
+            android:layout_toRightOf="@+id/awayTeamImageView"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="start"
+            android:textSize="@dimen/textSizeMedium"
+            tools:text="Team two" />
+
+    </RelativeLayout>
+
+</com.alexbros.opidlubnyi.allfootball.views.EventLayout>

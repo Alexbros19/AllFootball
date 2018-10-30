@@ -19,9 +19,9 @@ public class EventsPageAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0: return new CollapseEventsFragment();
+            case 0: return new EventsFragment();
             case 1: return new EventsFragment();
-            case 2: return new CollapseEventsFragment();
+            case 2: return new EventsFragment();
             default: return null;
         }
     }

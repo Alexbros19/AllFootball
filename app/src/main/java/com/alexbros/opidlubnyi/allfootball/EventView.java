@@ -8,14 +8,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alexbros.opidlubnyi.allfootball.picasso.TeamLogoImageView;
+import com.alexbros.opidlubnyi.allfootball.views.EventLayout;
+import com.alexbros.opidlubnyi.allfootball.views.EventStatusView;
 
 
 public class EventView extends LinearLayout {
-    private TextView startTimeTextView;
-    private TextView firstTeamNameTextView;
-    private TextView secondTeamNameTextView;
-    private ImageView teamOneImageView;
-    private ImageView teamTwoImageView;
+    private TextView homeTeamTextView;
+    private TextView awayTeamTextView;
+    private ImageView homeTeamImageView;
+    private ImageView awayTeamImageView;
+    private EventStatusView statusTextView;
 
     public EventView(Context context) {
         super(context);
@@ -33,19 +35,22 @@ public class EventView extends LinearLayout {
     }
 
     private void init(Context context) {
-        inflate(context, R.layout.fragment_event_list, this);
-        startTimeTextView = findViewById(R.id.timeText);
-        firstTeamNameTextView = findViewById(R.id.firstTeamName);
-        secondTeamNameTextView = findViewById(R.id.secondTeamName);
-        teamOneImageView = findViewById(R.id.teamOneImageView);
-        teamTwoImageView = findViewById(R.id.teamTwoImageView);
+        inflate(context, R.layout.fragment_event_list_item_impl, this);
+        EventLayout eventLayout = findViewById(R.id.eventLayout);
+        homeTeamTextView = eventLayout.findViewById(R.id.homeTeamTextView);
+        awayTeamTextView = eventLayout.findViewById(R.id.awayTeamTextView);
+        homeTeamImageView = eventLayout.findViewById(R.id.homeTeamImageView);
+        awayTeamImageView = eventLayout.findViewById(R.id.awayTeamImageView);
+        statusTextView = eventLayout.findViewById(R.id.statusTextView);
+
+        statusTextView.setIsScores();
     }
 
     public void setElement(ListElement listElement) {
-        startTimeTextView.setText(DateHelper.getFormattedTime(getContext(), listElement.getUtcStartTime()));
-        firstTeamNameTextView.setText(listElement.getFirstTeamName());
-        secondTeamNameTextView.setText(listElement.getSecondTeamName());
-        TeamLogoImageView.setTeamImage(getContext(), teamOneImageView, listElement.getTeamOneId(), true);
-        TeamLogoImageView.setTeamImage(getContext(), teamTwoImageView, listElement.getTeamTwoId(), true);
+        homeTeamTextView.setText(listElement.getFirstTeamName());
+        awayTeamTextView.setText(listElement.getSecondTeamName());
+        TeamLogoImageView.setTeamImage(getContext(), homeTeamImageView, listElement.getTeamOneId(), true);
+        TeamLogoImageView.setTeamImage(getContext(), awayTeamImageView, listElement.getTeamTwoId(), true);
+        statusTextView.setStatusText(DateHelper.getFormattedTime(getContext(), listElement.getUtcStartTime()));
     }
 }
