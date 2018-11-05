@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.helpers;
 
 import java.net.HttpURLConnection;
 import java.io.InputStream;
@@ -9,11 +9,11 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.net.MalformedURLException;
 
-class UrlHelper {
+public class UrlHelper {
 
     private static String result = null;
 
-    String getHttpData(String urlString) {
+    public String getHttpData(String urlString) {
         try {
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

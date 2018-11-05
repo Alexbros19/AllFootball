@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alexbros.opidlubnyi.allfootball.Constants;
+import com.alexbros.opidlubnyi.allfootball.EventContextActivity;
+import com.alexbros.opidlubnyi.allfootball.EventView;
+import com.alexbros.opidlubnyi.allfootball.ListElement;
+import com.alexbros.opidlubnyi.allfootball.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +23,7 @@ public class EventsListAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<ListElement> listElements = new ArrayList();
 
-    EventsListAdapter(Context context) {
+    public EventsListAdapter(Context context) {
         this.context = context;
     }
 
@@ -27,8 +33,9 @@ public class EventsListAdapter extends RecyclerView.Adapter {
     }
 
     public void updateFilteredData(List<ListElement> newList) {
-        listElements = new ArrayList<>();
-        listElements.addAll(newList);
+//        listElements = new ArrayList<>();
+//        listElements.addAll(newList);
+        this.listElements = newList;
         notifyDataSetChanged();
     }
 
@@ -44,13 +51,10 @@ public class EventsListAdapter extends RecyclerView.Adapter {
         final ListElement listElement = listElements.get(position);
 
         ((EventsViewHolder) holder).eventView.setElement(listElement);
-        ((EventsViewHolder) holder).eventView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, EventContextActivity.class);
-                intent.putExtra(Constants.BUTTONS_CONTEXT_ACTIVITY_PARAM, listElement);
-                context.startActivity(intent);
-            }
+        ((EventsViewHolder) holder).eventView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, EventContextActivity.class);
+            intent.putExtra(Constants.BUTTONS_CONTEXT_ACTIVITY_PARAM, listElement);
+            context.startActivity(intent);
         });
     }
 

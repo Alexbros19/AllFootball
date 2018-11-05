@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="color_activity_background_black">#FF161616</color>
+    <color name="color_tab_background_pressed_white_alpha">#22ffffff</color>
+    <color name="color_toolbar_text_light">#ffffffff</color>
+    <color name="color_orange">@color/color_text_yellow</color>
+    <color name="color_text_yellow">#fff4c712</color>
+    <color name="color_tab_background_green">#ff5ba465</color>
 </resources>

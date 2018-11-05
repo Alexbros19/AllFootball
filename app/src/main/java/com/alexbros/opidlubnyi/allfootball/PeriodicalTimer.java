@@ -4,7 +4,7 @@ import android.os.Handler;
 
 public class PeriodicalTimer {
     private Handler handler = new Handler();
-    private long period = 60000;
+    private long period;
     private Runnable task;
     private long lastRunTime = 0;
 

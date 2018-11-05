@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.alexbros.opidlubnyi.allfootball.Colors;
 import com.alexbros.opidlubnyi.allfootball.Constants;
-import com.alexbros.opidlubnyi.allfootball.MemoryCacheCleaner;
+import com.alexbros.opidlubnyi.allfootball.helpers.MemoryCacheCleaner;
 import com.alexbros.opidlubnyi.allfootball.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;

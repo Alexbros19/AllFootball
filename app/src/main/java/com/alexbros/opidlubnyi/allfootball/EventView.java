@@ -7,10 +7,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alexbros.opidlubnyi.allfootball.helpers.DateHelper;
 import com.alexbros.opidlubnyi.allfootball.picasso.TeamLogoImageView;
 import com.alexbros.opidlubnyi.allfootball.views.EventLayout;
 import com.alexbros.opidlubnyi.allfootball.views.EventStatusView;
-
 
 public class EventView extends LinearLayout {
     private TextView homeTeamTextView;

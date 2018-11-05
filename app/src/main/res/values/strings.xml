@@ -8,4 +8,7 @@
     <string name="close_drawer">Close</string>
     <string name="string_search">Search</string>
     <string name="string_refresh">Refresh</string>
+    <string name="string_feature_not_available_offline">"Currently not available"</string>
+    <string name="string_no_data_available">"No data available"</string>
+    <string name="string_today">Today</string>
 </resources>

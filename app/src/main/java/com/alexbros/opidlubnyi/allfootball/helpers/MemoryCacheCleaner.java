@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.helpers;
 
 import com.alexbros.opidlubnyi.allfootball.picasso.PicassoHolder;
 

@@ -2,7 +2,7 @@ package com.alexbros.opidlubnyi.allfootball.picasso;
 
 import android.content.Context;
 
-import com.alexbros.opidlubnyi.allfootball.URLContentHelper;
+import com.alexbros.opidlubnyi.allfootball.helpers.URLContentHelper;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Cache;

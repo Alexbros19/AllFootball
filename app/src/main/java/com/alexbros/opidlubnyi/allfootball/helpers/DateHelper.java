@@ -1,9 +1,12 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.helpers;
 
 import android.content.Context;
 
+import com.alexbros.opidlubnyi.allfootball.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -47,6 +50,16 @@ public class DateHelper {
             sdf = new SimpleDateFormat("h:mma", context.getResources().getConfiguration().locale);
             String time = sdf.format(utcStartTime);
             return time.toLowerCase().substring(0, time.length() - 1);
+        }
+    }
+
+    public static String getEventsListShortDayString(int position, Context context) {
+        if(position == 1) {
+            return context.getString(R.string.string_today);
+        } else {
+            Calendar calendar = GregorianCalendar.getInstance();
+                calendar.add(Calendar.DAY_OF_YEAR, position - 1);
+                return (new SimpleDateFormat(getYearlessPattern())).format(calendar.getTime());
         }
     }
 }

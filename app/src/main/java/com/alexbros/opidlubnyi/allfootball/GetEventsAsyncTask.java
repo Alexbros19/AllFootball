@@ -4,24 +4,28 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
+import com.alexbros.opidlubnyi.allfootball.helpers.UrlHelper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParsingJsonHelper extends AsyncTask<String, Void, List<ListElement>> {
-
-    private OnDataListener onDataListener;
+public class GetEventsAsyncTask extends AsyncTask<String, Void, List<ListElement>> {
+    private OnCompleteListener onCompleteListener;
+    private int eventsListPagePosition;
     private Handler endHandler;
 
-    interface OnDataListener {
-        void onReceived(List<ListElement> list);
+    public interface OnCompleteListener {
+        void onSuccess(List<ListElement> list, int position);
+        void onError(int position);
     }
 
-    ParsingJsonHelper(Handler endHandler, OnDataListener onDataListener) {
+    GetEventsAsyncTask(Handler endHandler, OnCompleteListener onCompleteListener, int eventsListPagePosition) {
         this.endHandler = endHandler;
-        this.onDataListener = onDataListener;
+        this.onCompleteListener = onCompleteListener;
+        this.eventsListPagePosition = eventsListPagePosition;
     }
 
     @Override
@@ -94,14 +98,23 @@ public class ParsingJsonHelper extends AsyncTask<String, Void, List<ListElement>
 
     @Override
     protected void onPostExecute(List<ListElement> list) {
-        onDataListener.onReceived(list);
-
-
-        if (endHandler != null) {
-            Message msg = new Message();
-            msg.arg2 = checkEventIsRunning(list);
-            msg.what = Constants.RESULT_OK;
-            endHandler.sendMessage(msg);
+        if (onCompleteListener != null && list != null && list.size() != 0) {
+            onCompleteListener.onSuccess(list, eventsListPagePosition);
+            if (endHandler != null) {
+                Message msg = new Message();
+                msg.arg2 = checkEventIsRunning(list);
+                msg.what = Constants.RESULT_OK;
+                endHandler.sendMessage(msg);
+            }
+        } else {
+            if (onCompleteListener != null) {
+                onCompleteListener.onError(eventsListPagePosition);
+                if (endHandler != null) {
+                    Message msg = new Message();
+                    msg.what = Constants.RESULT_EXCEPTION;
+                    endHandler.sendMessage(msg);
+                }
+            }
         }
     }
 }
