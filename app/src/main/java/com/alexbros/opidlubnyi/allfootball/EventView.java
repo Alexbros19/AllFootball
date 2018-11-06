@@ -1,7 +1,11 @@
 package com.alexbros.opidlubnyi.allfootball;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,9 +19,11 @@ import com.alexbros.opidlubnyi.allfootball.views.EventStatusView;
 public class EventView extends LinearLayout {
     private TextView homeTeamTextView;
     private TextView awayTeamTextView;
+    private TextView scoreTextView;
     private ImageView homeTeamImageView;
     private ImageView awayTeamImageView;
     private EventStatusView statusTextView;
+    private Typeface scoreTextViewDefaultTypeface;
 
     public EventView(Context context) {
         super(context);
@@ -39,9 +45,13 @@ public class EventView extends LinearLayout {
         EventLayout eventLayout = findViewById(R.id.eventLayout);
         homeTeamTextView = eventLayout.findViewById(R.id.homeTeamTextView);
         awayTeamTextView = eventLayout.findViewById(R.id.awayTeamTextView);
+        scoreTextView = eventLayout.findViewById(R.id.scoreTextView);
         homeTeamImageView = eventLayout.findViewById(R.id.homeTeamImageView);
         awayTeamImageView = eventLayout.findViewById(R.id.awayTeamImageView);
         statusTextView = eventLayout.findViewById(R.id.statusTextView);
+
+        if (scoreTextView != null)
+            scoreTextViewDefaultTypeface = scoreTextView.getTypeface();
 
         statusTextView.setIsScores();
     }
@@ -52,5 +62,25 @@ public class EventView extends LinearLayout {
         TeamLogoImageView.setTeamImage(getContext(), homeTeamImageView, listElement.getTeamOneId(), true);
         TeamLogoImageView.setTeamImage(getContext(), awayTeamImageView, listElement.getTeamTwoId(), true);
         statusTextView.setStatusText(DateHelper.getFormattedTime(getContext(), listElement.getUtcStartTime()));
+
+        if (listElement.running || listElement.finished) {
+            scoreTextView.setTypeface(scoreTextViewDefaultTypeface, Typeface.BOLD);
+            final SpannableStringBuilder goals = new SpannableStringBuilder();
+            int startIndex = goals.length();
+            goals.append(listElement.getTeamOneGoalsString().trim());
+            goals.setSpan(new ForegroundColorSpan(Colors.textColorThird), startIndex, goals.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            startIndex = goals.length();
+            goals.append(" : ");
+            goals.setSpan(new ForegroundColorSpan(Colors.textColorThird), startIndex, goals.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            startIndex = goals.length();
+            goals.append(listElement.getTeamTwoGoalsString().trim());
+            goals.setSpan(new ForegroundColorSpan(Colors.textColorThird), startIndex, goals.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            scoreTextView.setText(goals);
+        } else {
+            scoreTextView.setTypeface(scoreTextViewDefaultTypeface, Typeface.NORMAL);
+            scoreTextView.setText("- : -");
+        }
     }
 }
