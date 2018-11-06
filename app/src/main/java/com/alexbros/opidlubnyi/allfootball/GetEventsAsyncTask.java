@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
+import com.alexbros.opidlubnyi.allfootball.helpers.FeedParserHelper;
 import com.alexbros.opidlubnyi.allfootball.helpers.UrlHelper;
 
 import org.json.JSONArray;
@@ -56,19 +57,26 @@ public class GetEventsAsyncTask extends AsyncTask<String, Void, List<ListElement
                         listElement = new ListElement();
 
                         listElement.setStatusId(eventsJSONObject.getLong("statusId"));
+                        listElement.running = listElement.isRunning();
+                        listElement.finished = listElement.isFinished();
+                        listElement.upcoming = listElement.isUpcoming();
                         listElement.setMinute(eventsJSONObject.getString("minute"));
                         listElement.setUtcStartTime(eventsJSONObject.getLong("utcStartTime"));
 
-                        for(int k = 0; k < participants.length(); k++) {
-                            JSONObject participantsJSONObject = participants.getJSONObject(k);
-                            if (k == 0) {
-                                listElement.setFirstTeamName(participantsJSONObject.getString("name"));
-                                listElement.setTeamOneId(participantsJSONObject.getString("id"));
-                            } else {
-                                listElement.setSecondTeamName(participantsJSONObject.getString("name"));
-                                listElement.setTeamTwoId(participantsJSONObject.getString("id"));
-                            }
-                        }
+                        FeedParserHelper.EventParticipant participant;
+
+                        participant = FeedParserHelper.parseEventParticipantJson(participants.getJSONObject(0));
+                        listElement.setFirstTeamName(participant.name);
+                        listElement.setTeamOneId(participant.id);
+                        listElement.setTeamOneGoals(participant.goals);
+                        listElement.setTeamOneGoalsString(participant.goalsString);
+
+                        participant = FeedParserHelper.parseEventParticipantJson(participants.getJSONObject(1));
+                        listElement.setSecondTeamName(participant.name);
+                        listElement.setTeamTwoId(participant.id);
+                        listElement.setTeamTwoGoals(participant.goals);
+                        listElement.setTeamTwoGoalsString(participant.goalsString);
+
                         list.add(listElement);
                     }
                 }

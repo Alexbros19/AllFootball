@@ -61,7 +61,7 @@
             android:fontFamily="sans-serif-condensed"
             android:padding="5dp"
             android:textSize="@dimen/textSizeLarge"
-            android:text="-:-"
+            tools:text="- : -"
             tools:textStyle="bold" />
 
         <ImageView
