@@ -1,6 +1,7 @@
 package com.alexbros.opidlubnyi.allfootball;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
@@ -24,6 +25,7 @@ public class EventView extends LinearLayout {
     private ImageView awayTeamImageView;
     private EventStatusView statusTextView;
     private Typeface scoreTextViewDefaultTypeface;
+    private EventLayout eventLayout;
 
     public EventView(Context context) {
         super(context);
@@ -42,7 +44,7 @@ public class EventView extends LinearLayout {
 
     private void init(Context context) {
         inflate(context, R.layout.fragment_event_list_item_impl, this);
-        EventLayout eventLayout = findViewById(R.id.eventLayout);
+        eventLayout = findViewById(R.id.eventLayout);
         homeTeamTextView = eventLayout.findViewById(R.id.homeTeamTextView);
         awayTeamTextView = eventLayout.findViewById(R.id.awayTeamTextView);
         scoreTextView = eventLayout.findViewById(R.id.scoreTextView);
@@ -61,7 +63,8 @@ public class EventView extends LinearLayout {
         awayTeamTextView.setText(listElement.getSecondTeamName());
         TeamLogoImageView.setTeamImage(getContext(), homeTeamImageView, listElement.getTeamOneId(), true);
         TeamLogoImageView.setTeamImage(getContext(), awayTeamImageView, listElement.getTeamTwoId(), true);
-        statusTextView.setStatusText(DateHelper.getFormattedTime(getContext(), listElement.getUtcStartTime()));
+
+        statusTextView.setStatusText(listElement.status);
 
         if (listElement.running || listElement.finished) {
             scoreTextView.setTypeface(scoreTextViewDefaultTypeface, Typeface.BOLD);
@@ -81,6 +84,16 @@ public class EventView extends LinearLayout {
         } else {
             scoreTextView.setTypeface(scoreTextViewDefaultTypeface, Typeface.NORMAL);
             scoreTextView.setText("- : -");
+        }
+
+        if (listElement.running) {
+            eventLayout.setBackgroundColors(Colors.eventListStatusBackgroundColorRunning, Color.WHITE, statusTextView.getLayoutParams().width);
+            statusTextView.setTextColor(Colors.textColorThird);
+        } else if (listElement.halftime || listElement.firstHalftime || listElement.secondHalftime) {
+            eventLayout.setBackgroundColors(Colors.eventListStatusBackgroundColorHalftime, Color.WHITE, statusTextView.getLayoutParams().width);
+            statusTextView.setTextColor(Colors.textColorThird);
+        } else {
+            eventLayout.setBackgroundColors(Color.WHITE, Color.WHITE, statusTextView.getLayoutParams().width);
         }
     }
 }
