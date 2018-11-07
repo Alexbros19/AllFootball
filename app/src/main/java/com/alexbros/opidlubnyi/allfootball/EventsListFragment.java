@@ -143,7 +143,7 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
     public void onResume() {
         super.onResume();
         toolbar.setTitle(getString(R.string.app_name));
-        (new GetEventsAsyncTask(null, getEventsListListener, 1)).execute(Constants.TODAY_RESPONSE);
+        (new GetEventsAsyncTask(getContext(),null, getEventsListListener, 1)).execute(Constants.TODAY_RESPONSE);
 
         if (autoUpdateTimer == null)
             autoUpdateTimer = new PeriodicalTimer(AUTO_REFRESH_DELAY, autoUpdateTimerTask);
@@ -259,9 +259,9 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
 
         try {
             switch (currentEventsList) {
-                case 0: (new GetEventsAsyncTask(parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.YESTERDAY_RESPONSE); break;
-                case 1: (new GetEventsAsyncTask(parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.TODAY_RESPONSE); break;
-                case 2: (new GetEventsAsyncTask(parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.TOMORROW_RESPONSE); break;
+                case 0: (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.YESTERDAY_RESPONSE); break;
+                case 1: (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.TODAY_RESPONSE); break;
+                case 2: (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.TOMORROW_RESPONSE); break;
             }
         } catch (OutOfMemoryError e) {
             setRefreshMenuItemLoading(false);
@@ -311,9 +311,9 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
             if (!isAdded())
                 return;
             switch (position) {
-                case 0: (new GetEventsAsyncTask(null, getEventsListListener, position)).execute(Constants.YESTERDAY_RESPONSE); currentEventsList = position; break;
-                case 1: (new GetEventsAsyncTask(null, getEventsListListener, position)).execute(Constants.TODAY_RESPONSE); currentEventsList = position; break;
-                case 2: (new GetEventsAsyncTask(null, getEventsListListener, position)).execute(Constants.TOMORROW_RESPONSE); currentEventsList = position; break;
+                case 0: (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.YESTERDAY_RESPONSE); currentEventsList = position; break;
+                case 1: (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.TODAY_RESPONSE); currentEventsList = position; break;
+                case 2: (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.TOMORROW_RESPONSE); currentEventsList = position; break;
             }
         }
     };

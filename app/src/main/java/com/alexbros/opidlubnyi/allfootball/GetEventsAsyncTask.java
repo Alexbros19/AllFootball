@@ -1,9 +1,11 @@
 package com.alexbros.opidlubnyi.allfootball;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
+import com.alexbros.opidlubnyi.allfootball.helpers.DateHelper;
 import com.alexbros.opidlubnyi.allfootball.helpers.FeedParserHelper;
 import com.alexbros.opidlubnyi.allfootball.helpers.UrlHelper;
 
@@ -17,13 +19,15 @@ public class GetEventsAsyncTask extends AsyncTask<String, Void, List<ListElement
     private OnCompleteListener onCompleteListener;
     private int eventsListPagePosition;
     private Handler endHandler;
+    private Context context;
 
     public interface OnCompleteListener {
         void onSuccess(List<ListElement> list, int position);
         void onError(int position);
     }
 
-    GetEventsAsyncTask(Handler endHandler, OnCompleteListener onCompleteListener, int eventsListPagePosition) {
+    GetEventsAsyncTask(Context context, Handler endHandler, OnCompleteListener onCompleteListener, int eventsListPagePosition) {
+        this.context = context;
         this.endHandler = endHandler;
         this.onCompleteListener = onCompleteListener;
         this.eventsListPagePosition = eventsListPagePosition;
@@ -56,12 +60,16 @@ public class GetEventsAsyncTask extends AsyncTask<String, Void, List<ListElement
                         JSONArray participants = eventsJSONObject.getJSONArray("participants");
                         listElement = new ListElement();
 
-                        listElement.setStatusId(eventsJSONObject.getLong("statusId"));
+                        listElement.setStatusId(FeedParserHelper.getLongValueOrNull(eventsJSONObject, "statusId"));
                         listElement.running = listElement.isRunning();
                         listElement.finished = listElement.isFinished();
                         listElement.upcoming = listElement.isUpcoming();
-                        listElement.setMinute(eventsJSONObject.getString("minute"));
-                        listElement.setUtcStartTime(eventsJSONObject.getLong("utcStartTime"));
+                        listElement.halftime = listElement.isHalftime();
+                        listElement.firstHalftime = listElement.isFirstHalftime();
+                        listElement.secondHalftime = listElement.isSecondHalftime();
+                        listElement.setMinute(FeedParserHelper.getStringValueOrEmpty(eventsJSONObject, "minute"));
+                        listElement.setUtcStartTime(DateHelper.getFormattedTime(context, FeedParserHelper.getLongValueOrNull(eventsJSONObject, "utcStartTime")));
+                        listElement.setStatus(FeedParserHelper.getEventStatusText(context, listElement));
 
                         FeedParserHelper.EventParticipant participant;
 

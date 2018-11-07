@@ -2,8 +2,12 @@ package com.alexbros.opidlubnyi.allfootball;
 
 import java.io.Serializable;
 
+import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_CANCELLED;
 import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_FINISHED;
+import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_FIRST_HALF;
+import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_HALF_TIME;
 import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_RUNNING;
+import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_SECOND_HALF;
 import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_UPCOMING;
 
 public class ListElement implements Serializable {
@@ -11,7 +15,8 @@ public class ListElement implements Serializable {
     private String secondTeamName = "";
     private String minute = "";
     private long statusId = 0;
-    private long utcStartTime = 0;
+    public String status = "";
+    private String utcStartTime = "";
     private String teamOneId = "";
     private String teamTwoId = "";
     private int teamOneGoals = 0;
@@ -22,12 +27,16 @@ public class ListElement implements Serializable {
     public boolean running;
     public boolean finished;
     public boolean upcoming;
+    public boolean canceled;
+    public boolean halftime;
+    public boolean firstHalftime;
+    public boolean secondHalftime;
 
     ListElement() {
     }
 
     // Check if event is running
-    boolean isRunning() {
+    public boolean isRunning() {
         return ((this.statusId & STATUS_RUNNING.getFlag()) != 0);
     }
 
@@ -37,6 +46,31 @@ public class ListElement implements Serializable {
 
     public boolean isUpcoming() {
         return ((this.statusId & STATUS_UPCOMING.getFlag()) != 0);
+    }
+
+    public boolean isCancelled() {
+        return ((this.statusId & STATUS_CANCELLED.getFlag()) != 0);
+    }
+
+    public boolean isHalftime() {
+        return ((this.statusId & STATUS_HALF_TIME.getFlag()) != 0);
+    }
+
+    public boolean isFirstHalftime() {
+        return ((this.statusId & STATUS_FIRST_HALF.getFlag()) != 0);
+    }
+
+    public boolean isSecondHalftime() {
+        return ((this.statusId & STATUS_SECOND_HALF.getFlag()) != 0);
+    }
+
+    public String getFormattedMinute() {
+        if (((statusId & STATUS_FIRST_HALF.getFlag()) != 0) && (45 - Integer.parseInt(minute) < 0)) {
+            return 45 + "+" + (Integer.parseInt(minute) - 45) + "'";
+        } else if (((statusId & STATUS_SECOND_HALF.getFlag()) != 0) && (90 - Integer.parseInt(minute) < 0)) {
+            return 90 + "+" + (Integer.parseInt(minute) - 90) + "'";
+        }
+        return minute + "'";
     }
 
     void setFirstTeamName(String firstTeamName) {
@@ -55,6 +89,14 @@ public class ListElement implements Serializable {
         return secondTeamName;
     }
 
+    void setStatus(String status) {
+        this.status = status;
+    }
+
+    String getStatus() {
+        return status;
+    }
+
     void setMinute(String minute) {
         this.minute = minute;
     }
@@ -63,12 +105,15 @@ public class ListElement implements Serializable {
         this.statusId = statusId;
     }
 
+    public long getStatusId() {
+        return statusId;
+    }
 
-    long getUtcStartTime() {
+    public String getUtcStartTime() {
         return utcStartTime;
     }
 
-    void setUtcStartTime(long utcStartTime) {
+    void setUtcStartTime(String utcStartTime) {
         this.utcStartTime = utcStartTime;
     }
 
@@ -118,5 +163,9 @@ public class ListElement implements Serializable {
 
     public String getTeamTwoGoalsString() {
         return teamTwoGoalsString;
+    }
+
+    public String getMinute() {
+        return minute;
     }
 }
