@@ -22,6 +22,6 @@
         android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="@string/string_feature_not_available_offline"
+        android:text="@string/string_filter_no_games"
         android:textSize="@dimen/textSizeLarge" />
 </RelativeLayout>

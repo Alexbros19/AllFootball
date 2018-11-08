@@ -36,6 +36,11 @@
                 layout="@layout/notification_layout"
                 android:visibility="gone" />
 
+            <include
+                android:id="@+id/notificationNoMatchesFilter"
+                layout="@layout/notification_filter_layout"
+                android:visibility="gone" />
+
             <com.alexbros.opidlubnyi.allfootball.views.PagerSlidingTabStrip
                 android:id="@+id/tabPageIndicatorEventsList"
                 android:layout_width="match_parent"

@@ -32,7 +32,6 @@
             android:tint="@color/color_orange" />
 
         <TextView
-            android:id="@+id/notificationTextViewEventsList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
@@ -41,6 +40,32 @@
             android:paddingTop="8dp"
             android:paddingRight="10dp"
             android:text="@string/string_no_data_available"
+            android:textSize="@dimen/textSizeLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notificationNoMatchesFilter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_information"
+            android:tint="@color/color_orange" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingTop="8dp"
+            android:paddingRight="10dp"
+            android:text="@string/string_filter_no_games"
             android:textSize="@dimen/textSizeLarge" />
     </LinearLayout>
 
