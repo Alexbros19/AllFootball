@@ -1,6 +1,7 @@
 package com.alexbros.opidlubnyi.allfootball;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_CANCELLED;
 import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_FINISHED;
@@ -16,7 +17,7 @@ public class ListElement implements Serializable {
     private String minute = "";
     private long statusId = 0;
     public String status = "";
-    private String utcStartTime = "";
+    private long utcStartTime = 0;
     private String teamOneId = "";
     private String teamTwoId = "";
     private int teamOneGoals = 0;
@@ -109,11 +110,11 @@ public class ListElement implements Serializable {
         return statusId;
     }
 
-    public String getUtcStartTime() {
+    public Long getUtcStartTime() {
         return utcStartTime;
     }
 
-    void setUtcStartTime(String utcStartTime) {
+    void setUtcStartTime(Long utcStartTime) {
         this.utcStartTime = utcStartTime;
     }
 
@@ -167,5 +168,19 @@ public class ListElement implements Serializable {
 
     public String getMinute() {
         return minute;
+    }
+
+    public static final class TimeOrderComparator implements Comparator<ListElement> {
+        TimeOrderComparator() {}
+
+        @Override
+        public int compare(ListElement o1, ListElement o2) {
+            if (o1.utcStartTime > o2.utcStartTime)
+                return +1;
+            else if (o1.utcStartTime < o2.utcStartTime)
+                return -1;
+            else
+                return 0;
+        }
     }
 }
