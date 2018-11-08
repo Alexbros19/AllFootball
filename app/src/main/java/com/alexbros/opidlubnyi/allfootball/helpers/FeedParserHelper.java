@@ -94,7 +94,7 @@ public class FeedParserHelper {
             if (listElement.isRunning())
                 status = listElement.getFormattedMinute();
             else if (listElement.isUpcoming())
-                status = listElement.getUtcStartTime();
+                status = DateHelper.getFormattedTime(context, listElement.getUtcStartTime());
             else if (listElement.isFinished())
                 status = context.getString(R.string.string_match_status_full_time);
             else if (listElement.isCancelled())

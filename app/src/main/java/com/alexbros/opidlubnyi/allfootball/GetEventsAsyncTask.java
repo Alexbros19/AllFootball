@@ -5,13 +5,13 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
-import com.alexbros.opidlubnyi.allfootball.helpers.DateHelper;
 import com.alexbros.opidlubnyi.allfootball.helpers.FeedParserHelper;
 import com.alexbros.opidlubnyi.allfootball.helpers.UrlHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class GetEventsAsyncTask extends AsyncTask<String, Void, List<ListElement
                         listElement.firstHalftime = listElement.isFirstHalftime();
                         listElement.secondHalftime = listElement.isSecondHalftime();
                         listElement.setMinute(FeedParserHelper.getStringValueOrEmpty(eventsJSONObject, "minute"));
-                        listElement.setUtcStartTime(DateHelper.getFormattedTime(context, FeedParserHelper.getLongValueOrNull(eventsJSONObject, "utcStartTime")));
+                        listElement.setUtcStartTime(FeedParserHelper.getLongValueOrNull(eventsJSONObject, "utcStartTime"));
                         listElement.setStatus(FeedParserHelper.getEventStatusText(context, listElement));
 
                         FeedParserHelper.EventParticipant participant;

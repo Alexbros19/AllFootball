@@ -40,6 +40,7 @@ import com.alexbros.opidlubnyi.allfootball.GetEventsAsyncTask.OnCompleteListener
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class EventsListFragment extends Fragment implements SearchView.OnQueryTextListener {
@@ -387,6 +388,7 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
                 notificationNoDataEventsList.setVisibility(View.VISIBLE);
             } else {
                 EventsListAdapter eventsListAdapter = (EventsListAdapter) recyclerViewEventsList.getAdapter();
+                Collections.sort(eventsList, new ListElement.TimeOrderComparator());
 
                 if (model.onlyLiveGamesFilterEnabled) {
                     eventsListAdapter.setData(redrawLiveEvents(eventsList));
