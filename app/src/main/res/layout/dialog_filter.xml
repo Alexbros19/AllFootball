@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fadeScrollbars="true"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <RelativeLayout
+        android:id="@+id/filterdialog_liveRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp">
+
+        <CheckBox
+            android:id="@+id/filterdialog_liveCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:clickable="false" />
+
+        <TextView
+            android:id="@+id/filterdialog_liveTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/filterdialog_liveCheckbox"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/string_live_filter"
+            android:textSize="@dimen/textSizeLarge" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/filterdialog_liveTitle"
+            android:layout_toRightOf="@+id/filterdialog_liveCheckbox"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/string_live_filter_description"
+            android:textColor="#ff9d9d9d"
+            android:textSize="@dimen/textSizeSmall" />
+    </RelativeLayout>
+
+</ScrollView>

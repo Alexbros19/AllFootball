@@ -11,6 +11,12 @@
     <string name="string_feature_not_available_offline">"Currently not available"</string>
     <string name="string_no_data_available">"No data available"</string>
     <string name="string_today">Today</string>
+    <string name="string_filter_title">"Filter"</string>
+    <string name="string_live_filter">"Live games" </string>
+    <string name="string_live_filter_description">"Show only currently ongoing games" </string>
+    <string name="string_ok">"OK"</string>
+    <string name="string_cancel">"Cancel" </string>
+    <string name="string_filter_no_games">"No games on this day for the applied filter" </string>
 
     <string name="string_match_status_half_time">"HT"</string>
     <string name="string_match_status_1st_half">"1H"</string>

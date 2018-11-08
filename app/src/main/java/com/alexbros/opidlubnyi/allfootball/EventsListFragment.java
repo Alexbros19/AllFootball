@@ -31,6 +31,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.alexbros.opidlubnyi.allfootball.adapters.EventsListAdapter;
 import com.alexbros.opidlubnyi.allfootball.adapters.EventsListHorizontalPageAdapter;
+import com.alexbros.opidlubnyi.allfootball.dialogs.FilterDialog;
 import com.alexbros.opidlubnyi.allfootball.helpers.URLContentHelper;
 import com.alexbros.opidlubnyi.allfootball.views.PagerSlidingTabStrip;
 import com.alexbros.opidlubnyi.allfootball.views.ZoomOutPageTransformer;
@@ -54,14 +55,17 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
     PagerSlidingTabStrip tabPageIndicator;
     private SearchView searchView;
     private MenuItem refreshMenuItem;
+    private MenuItem filterMenuItem;
     private List<ListElement> listElements = new ArrayList();
     private boolean isRunningEvent = false;
+    private ModelData model;
 
     private PeriodicalTimer autoUpdateTimer = null;
     private Runnable autoUpdateTimerTask = this::reloadCurrentViewFromServer;
     private final ParseScoreCompleteHandler parseScoreCompleteHandler = new ParseScoreCompleteHandler(this);
 
     public EventsListFragment() {
+        model = ModelData.getInstance();
     }
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -72,8 +76,13 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
 
             String action = intent.getAction();
 
-            if(action != null && action.equals(Constants.BROADCAST_ACTION_RELOAD_SCORES)) {
+            if (action != null && action.equals(Constants.BROADCAST_ACTION_RELOAD_SCORES)) {
                 reloadScores();
+            }
+
+            if (action != null && action.equals(Constants.BROADCAST_ACTION_REDRAW_SCORES)) {
+                reloadCurrentViewFromServer();
+                setOptionsMenuVisibilityAndStyle();
             }
         }
     };
@@ -152,6 +161,7 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constants.BROADCAST_ACTION_RELOAD_SCORES);
+        intentFilter.addAction(Constants.BROADCAST_ACTION_REDRAW_SCORES);
         LocalBroadcastManager.getInstance(activity).registerReceiver(broadcastReceiver, intentFilter);
     }
 
@@ -178,9 +188,8 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
         String userInput = newText.toLowerCase();
         List<ListElement> newList = new ArrayList<>();
 
-        for (ListElement listElement : listElements)
-        {
-            if(listElement.getFirstTeamName().toLowerCase().contains(userInput) || listElement.getSecondTeamName().toLowerCase().contains(userInput)) {
+        for (ListElement listElement : listElements) {
+            if (listElement.getFirstTeamName().toLowerCase().contains(userInput) || listElement.getSecondTeamName().toLowerCase().contains(userInput)) {
                 newList.add(listElement);
             }
         }
@@ -214,17 +223,19 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
         });
 
         refreshMenuItem = menu.findItem(R.id.action_refresh);
+        filterMenuItem = menu.findItem(R.id.action_filter);
+
+        setOptionsMenuVisibilityAndStyle();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final int itemId = item.getItemId();
 
-//        if (itemId == filterMenuItem.getItemId()) {
-//            FilterDialog.createDialog(activity, activity.getLayoutInflater(), model).show();
-//            return true;
-//        } else if (itemId == refreshMenuItem.getItemId()) {
-        if (itemId == refreshMenuItem.getItemId()) {
+        if (itemId == filterMenuItem.getItemId()) {
+            FilterDialog.createDialog(activity, activity.getLayoutInflater(), model).show();
+            return true;
+        } else if (itemId == refreshMenuItem.getItemId()) {
             reloadScores();
             return true;
         }
@@ -238,6 +249,18 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
             Intent reloadScoresIntent = new Intent(Constants.BROADCAST_ACTION_RELOAD_SCORES);
             LocalBroadcastManager.getInstance(activity).sendBroadcast(reloadScoresIntent);
         });
+    }
+
+    private List<ListElement> redrawLiveEvents(List<ListElement> list) {
+        List<ListElement> newList = new ArrayList<>();
+
+        for (ListElement listElement : list) {
+            if (model.onlyLiveGamesFilterEnabled && listElement.running) {
+                newList.add(listElement);
+            }
+        }
+
+        return newList;
     }
 
     private void reloadScores() {
@@ -259,9 +282,15 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
 
         try {
             switch (currentEventsList) {
-                case 0: (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.YESTERDAY_RESPONSE); break;
-                case 1: (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.TODAY_RESPONSE); break;
-                case 2: (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.TOMORROW_RESPONSE); break;
+                case 0:
+                    (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.YESTERDAY_RESPONSE);
+                    break;
+                case 1:
+                    (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.TODAY_RESPONSE);
+                    break;
+                case 2:
+                    (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.TOMORROW_RESPONSE);
+                    break;
             }
         } catch (OutOfMemoryError e) {
             setRefreshMenuItemLoading(false);
@@ -287,6 +316,17 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
     private void enableSearchMode(boolean enable) {
         boolean visibility = !enable;
         refreshMenuItem.setVisible(visibility);
+        filterMenuItem.setVisible(visibility);
+    }
+
+    private void setOptionsMenuVisibilityAndStyle() {
+        if (filterMenuItem == null) //this should be the last added menu item that is going to be edit below!!!
+            return;
+
+        if (model.onlyLiveGamesFilterEnabled)
+            filterMenuItem.setIcon(R.drawable.icon_actionbar_funnel_on);
+        else
+            filterMenuItem.setIcon(R.drawable.icon_actionbar_funnel_off);
     }
 
     private void setListAdapter(RecyclerView recyclerView) {
@@ -311,9 +351,18 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
             if (!isAdded())
                 return;
             switch (position) {
-                case 0: (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.YESTERDAY_RESPONSE); currentEventsList = position; break;
-                case 1: (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.TODAY_RESPONSE); currentEventsList = position; break;
-                case 2: (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.TOMORROW_RESPONSE); currentEventsList = position; break;
+                case 0:
+                    (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.YESTERDAY_RESPONSE);
+                    currentEventsList = position;
+                    break;
+                case 1:
+                    (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.TODAY_RESPONSE);
+                    currentEventsList = position;
+                    break;
+                case 2:
+                    (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.TOMORROW_RESPONSE);
+                    currentEventsList = position;
+                    break;
             }
         }
     };
@@ -331,17 +380,32 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
 
             RecyclerView recyclerViewEventsList = currentView.findViewById(R.id.recyclerViewEventsList);
             View notificationNoDataEventsList = currentView.findViewById(R.id.notificationNoDataEventsList);
+            View notificationNoMatchesFilter = currentView.findViewById(R.id.notificationNoMatchesFilter);
 
             if (eventsList == null) {
                 recyclerViewEventsList.setVisibility(View.GONE);
                 notificationNoDataEventsList.setVisibility(View.VISIBLE);
             } else {
                 EventsListAdapter eventsListAdapter = (EventsListAdapter) recyclerViewEventsList.getAdapter();
-                eventsListAdapter.setData(eventsList);
-                listElements = eventsList;
 
-                recyclerViewEventsList.setVisibility(View.VISIBLE);
-                notificationNoDataEventsList.setVisibility(View.GONE);
+                if (model.onlyLiveGamesFilterEnabled) {
+                    eventsListAdapter.setData(redrawLiveEvents(eventsList));
+                    if (redrawLiveEvents(eventsList).size() == 0) {
+                        recyclerViewEventsList.setVisibility(View.GONE);
+                        notificationNoDataEventsList.setVisibility(View.GONE);
+                        notificationNoMatchesFilter.setVisibility(View.VISIBLE);
+                    } else {
+                        recyclerViewEventsList.setVisibility(View.VISIBLE);
+                        notificationNoDataEventsList.setVisibility(View.GONE);
+                        notificationNoMatchesFilter.setVisibility(View.GONE);
+                    }
+                } else {
+                    eventsListAdapter.setData(eventsList);
+                    recyclerViewEventsList.setVisibility(View.VISIBLE);
+                    notificationNoDataEventsList.setVisibility(View.GONE);
+                    notificationNoMatchesFilter.setVisibility(View.GONE);
+                }
+                listElements = eventsList;
             }
         }
 
@@ -392,6 +456,7 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
                 handler.postDelayed(() -> parent.setRefreshMenuItemLoading(false), 500);
             } else {
                 parent.setRefreshMenuItemLoading(false);
+                parent.setOptionsMenuVisibilityAndStyle();
             }
         }
     }

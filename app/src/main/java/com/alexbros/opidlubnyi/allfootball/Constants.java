@@ -11,6 +11,7 @@ public class Constants {
     public static final int RESULT_OK = 0;
 
     public static final String BROADCAST_ACTION_RELOAD_SCORES = "BROADCAST_ACTION_RELOAD_SCORES";
+    public static final String BROADCAST_ACTION_REDRAW_SCORES = "BROADCAST_ACTION_REDRAW_SCORES";
 
     public static String BACKGROUND_IMAGEVIEW_TAG = "background";
 }
