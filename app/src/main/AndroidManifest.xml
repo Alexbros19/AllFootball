@@ -21,10 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".EventContextActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity android:name=".EventContextActivity"/>
     </application>
 
 </manifest>

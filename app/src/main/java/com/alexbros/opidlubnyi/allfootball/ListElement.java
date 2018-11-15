@@ -3,13 +3,13 @@ package com.alexbros.opidlubnyi.allfootball;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_CANCELLED;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_FINISHED;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_FIRST_HALF;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_HALF_TIME;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_RUNNING;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_SECOND_HALF;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_UPCOMING;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_CANCELLED;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_FINISHED;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_FIRST_HALF;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_HALF_TIME;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_RUNNING;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_SECOND_HALF;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_UPCOMING;
 
 public class ListElement implements Serializable {
     private String firstTeamName = "";
@@ -18,12 +18,12 @@ public class ListElement implements Serializable {
     private long statusId = 0;
     public String status = "";
     private long utcStartTime = 0;
-    private String teamOneId = "";
-    private String teamTwoId = "";
-    private int teamOneGoals = 0;
-    private int teamTwoGoals = 0;
-    private String teamOneGoalsString = "";
-    private String teamTwoGoalsString = "";
+    private String firstTeamId = "";
+    private String secondTeamId = "";
+    private int firstTeamGoals = 0;
+    private int secondTeamGoals = 0;
+    private String firstTeamGoalsString = "";
+    private String secondTeamGoalsString = "";
 
     public boolean running;
     public boolean finished;
@@ -74,35 +74,35 @@ public class ListElement implements Serializable {
         return minute + "'";
     }
 
-    void setFirstTeamName(String firstTeamName) {
+    public void setFirstTeamName(String firstTeamName) {
         this.firstTeamName = firstTeamName;
     }
 
-    String getFirstTeamName() {
+    public String getFirstTeamName() {
         return firstTeamName;
     }
 
-    void setSecondTeamName(String secondTeamName) {
+    public void setSecondTeamName(String secondTeamName) {
         this.secondTeamName = secondTeamName;
     }
 
-    String getSecondTeamName() {
+    public String getSecondTeamName() {
         return secondTeamName;
     }
 
-    void setStatus(String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    String getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    void setMinute(String minute) {
+    public void setMinute(String minute) {
         this.minute = minute;
     }
 
-    void setStatusId(long statusId) {
+    public void setStatusId(long statusId) {
         this.statusId = statusId;
     }
 
@@ -114,56 +114,56 @@ public class ListElement implements Serializable {
         return utcStartTime;
     }
 
-    void setUtcStartTime(Long utcStartTime) {
+    public void setUtcStartTime(Long utcStartTime) {
         this.utcStartTime = utcStartTime;
     }
 
-    String getTeamOneId() {
-        return teamOneId;
+    public String getFirstTeamId() {
+        return firstTeamId;
     }
 
-    void setTeamOneId(String teamOneId) {
-        this.teamOneId = teamOneId;
+    public void setFirstTeamId(String firstTeamId) {
+        this.firstTeamId = firstTeamId;
     }
 
-    String getTeamTwoId() {
-        return teamTwoId;
+    public String getSecondTeamId() {
+        return secondTeamId;
     }
 
-    void setTeamTwoId(String teamTwoId) {
-        this.teamTwoId = teamTwoId;
+    public void setSecondTeamId(String secondTeamId) {
+        this.secondTeamId = secondTeamId;
     }
 
-    public int getTeamOneGoals() {
-        return teamOneGoals;
+    public int getFirstTeamGoals() {
+        return firstTeamGoals;
     }
 
-    void setTeamOneGoals(int teamOneGoals) {
-        this.teamOneGoals = teamOneGoals;
+    public void setFirstTeamGoals(int firstTeamGoals) {
+        this.firstTeamGoals = firstTeamGoals;
     }
 
-    public int getTeamTwoGoals() {
-        return teamTwoGoals;
+    public int getSecondTeamGoals() {
+        return secondTeamGoals;
     }
 
-    void setTeamTwoGoals(int teamTwoGoals) {
-        this.teamTwoGoals = teamTwoGoals;
+    public void setSecondTeamGoals(int secondTeamGoals) {
+        this.secondTeamGoals = secondTeamGoals;
     }
 
-    void setTeamOneGoalsString(String teamOneGoalsString) {
-        this.teamOneGoalsString = teamOneGoalsString;
+    public void setFirstTeamGoalsString(String firstTeamGoalsString) {
+        this.firstTeamGoalsString = firstTeamGoalsString;
     }
 
-    public void setTeamTwoGoalsString(String teamTwoGoalsString) {
-        this.teamTwoGoalsString = teamTwoGoalsString;
+    public void setSecondTeamGoalsString(String secondTeamGoalsString) {
+        this.secondTeamGoalsString = secondTeamGoalsString;
     }
 
-    public String getTeamOneGoalsString() {
-        return teamOneGoalsString;
+    public String getFirstTeamGoalsString() {
+        return firstTeamGoalsString;
     }
 
-    public String getTeamTwoGoalsString() {
-        return teamTwoGoalsString;
+    public String getSecondTeamGoalsString() {
+        return secondTeamGoalsString;
     }
 
     public String getMinute() {

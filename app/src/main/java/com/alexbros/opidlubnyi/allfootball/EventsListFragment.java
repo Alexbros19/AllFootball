@@ -331,7 +331,7 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
     }
 
     private void setListAdapter(RecyclerView recyclerView) {
-        EventsListAdapter eventsListAdapter = new EventsListAdapter(getContext());
+        EventsListAdapter eventsListAdapter = new EventsListAdapter(activity);
         recyclerView.setAdapter(eventsListAdapter);
     }
 

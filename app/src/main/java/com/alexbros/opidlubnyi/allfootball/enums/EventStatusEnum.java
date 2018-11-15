@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.enums;
 
 public enum EventStatusEnum {
     STATUS_RUNNING(1<<0)

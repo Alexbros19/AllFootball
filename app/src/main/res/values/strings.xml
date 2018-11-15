@@ -17,6 +17,10 @@
     <string name="string_ok">"OK"</string>
     <string name="string_cancel">"Cancel" </string>
     <string name="string_filter_no_games">"No games on this day for the applied filter" </string>
+    <string name="string_teams_profile">"Teams Profile" </string>
+    <string name="string_official_channels">"Official Channels"</string>
+    <string name="string_load_channels_error">"No channels available." </string>
+    <string name="string_error_unknown">"Unknown error"</string>
 
     <string name="string_match_status_half_time">"HT"</string>
     <string name="string_match_status_1st_half">"1H"</string>
