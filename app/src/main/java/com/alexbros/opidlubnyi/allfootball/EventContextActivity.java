@@ -1,36 +1,28 @@
 package com.alexbros.opidlubnyi.allfootball;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.widget.TextView;
 
 public class EventContextActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.event_list_context);
-
-        Toolbar toolbar = findViewById(R.id.eventContentToolbar);
-        setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
-        TextView buttonNumber = findViewById(R.id.eventContentInfo);
-        ListElement listElement = (ListElement) getIntent().getSerializableExtra(Constants.BUTTONS_CONTEXT_ACTIVITY_PARAM);
-        buttonNumber.setText(listElement.getFirstTeamName() + " vs " + listElement.getSecondTeamName());
+    public static void showActivity(Activity activity, String firstTeamId, String secondTeamId) {
+        Intent intent = new Intent(activity, EventContextActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_FIRST_TEAM_ID, firstTeamId);
+        intent.putExtra(Constants.INTENT_EXTRA_SECOND_TEAM_ID, secondTeamId);
+        activity.startActivity(intent);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
-            this.finish();
-        }
-        return super.onOptionsItemSelected(item);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_fragment_holder);
+
+        Intent intent = getIntent();
+        String firstTeamId = intent.getStringExtra(Constants.INTENT_EXTRA_FIRST_TEAM_ID);
+        String secondTeamId = intent.getStringExtra(Constants.INTENT_EXTRA_SECOND_TEAM_ID);
+
+        EventContextFragment.showFragment(getSupportFragmentManager(), R.id.fragmentFrameLayout, firstTeamId, secondTeamId);
     }
 }

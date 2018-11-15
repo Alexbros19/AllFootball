@@ -8,19 +8,19 @@ import com.alexbros.opidlubnyi.allfootball.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_ABANDONED;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_AFTER_EXTRA_TIME;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_AFTER_PENALTIES;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_BREAK;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_DELAYED;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_EXTRA_TIME;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_FIRST_HALF;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_HALF_TIME;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_INTERRUPTED;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_PENALTIES;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_POSTPONED;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_SECOND_HALF;
-import static com.alexbros.opidlubnyi.allfootball.EventStatusEnum.STATUS_SUSPENDED;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_ABANDONED;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_AFTER_EXTRA_TIME;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_AFTER_PENALTIES;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_BREAK;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_DELAYED;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_EXTRA_TIME;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_FIRST_HALF;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_HALF_TIME;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_INTERRUPTED;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_PENALTIES;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_POSTPONED;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_SECOND_HALF;
+import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_SUSPENDED;
 
 public class FeedParserHelper {
     public static FeedParserHelper.EventParticipant parseEventParticipantJson(JSONObject participantJsonObject) throws JSONException {

@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alexbros.opidlubnyi.allfootball.helpers.DateHelper;
 import com.alexbros.opidlubnyi.allfootball.picasso.TeamLogoImageView;
 import com.alexbros.opidlubnyi.allfootball.views.EventLayout;
 import com.alexbros.opidlubnyi.allfootball.views.EventStatusView;
@@ -61,8 +60,8 @@ public class EventView extends LinearLayout {
     public void setElement(ListElement listElement) {
         homeTeamTextView.setText(listElement.getFirstTeamName());
         awayTeamTextView.setText(listElement.getSecondTeamName());
-        TeamLogoImageView.setTeamImage(getContext(), homeTeamImageView, listElement.getTeamOneId(), true);
-        TeamLogoImageView.setTeamImage(getContext(), awayTeamImageView, listElement.getTeamTwoId(), true);
+        TeamLogoImageView.setTeamImage(getContext(), homeTeamImageView, listElement.getFirstTeamId(), true);
+        TeamLogoImageView.setTeamImage(getContext(), awayTeamImageView, listElement.getSecondTeamId(), true);
 
         statusTextView.setStatusText(listElement.status);
 
@@ -70,7 +69,7 @@ public class EventView extends LinearLayout {
             scoreTextView.setTypeface(scoreTextViewDefaultTypeface, Typeface.BOLD);
             final SpannableStringBuilder goals = new SpannableStringBuilder();
             int startIndex = goals.length();
-            goals.append(listElement.getTeamOneGoalsString().trim());
+            goals.append(listElement.getFirstTeamGoalsString().trim());
             goals.setSpan(new ForegroundColorSpan(Colors.textColorThird), startIndex, goals.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             startIndex = goals.length();
@@ -78,7 +77,7 @@ public class EventView extends LinearLayout {
             goals.setSpan(new ForegroundColorSpan(Colors.textColorThird), startIndex, goals.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             startIndex = goals.length();
-            goals.append(listElement.getTeamTwoGoalsString().trim());
+            goals.append(listElement.getSecondTeamGoalsString().trim());
             goals.setSpan(new ForegroundColorSpan(Colors.textColorThird), startIndex, goals.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             scoreTextView.setText(goals);
         } else {

@@ -1,15 +1,12 @@
 package com.alexbros.opidlubnyi.allfootball.adapters;
 
-import android.content.Context;
-import android.content.Intent;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alexbros.opidlubnyi.allfootball.Constants;
 import com.alexbros.opidlubnyi.allfootball.EventContextActivity;
 import com.alexbros.opidlubnyi.allfootball.EventView;
 import com.alexbros.opidlubnyi.allfootball.ListElement;
@@ -20,11 +17,11 @@ import java.util.List;
 
 public class EventsListAdapter extends RecyclerView.Adapter {
 
-    private Context context;
+    private FragmentActivity activity;
     private List<ListElement> listElements = new ArrayList();
 
-    public EventsListAdapter(Context context) {
-        this.context = context;
+    public EventsListAdapter(FragmentActivity activity) {
+        this.activity = activity;
     }
 
     public void setData(List<ListElement> listElements) {
@@ -33,8 +30,6 @@ public class EventsListAdapter extends RecyclerView.Adapter {
     }
 
     public void updateFilteredData(List<ListElement> newList) {
-//        listElements = new ArrayList<>();
-//        listElements.addAll(newList);
         this.listElements = newList;
         notifyDataSetChanged();
     }
@@ -52,9 +47,11 @@ public class EventsListAdapter extends RecyclerView.Adapter {
 
         ((EventsViewHolder) holder).eventView.setElement(listElement);
         ((EventsViewHolder) holder).eventView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, EventContextActivity.class);
-            intent.putExtra(Constants.BUTTONS_CONTEXT_ACTIVITY_PARAM, listElement);
-            context.startActivity(intent);
+            EventContextActivity.showActivity(
+                    activity,
+                    listElement.getFirstTeamId(),
+                    listElement.getSecondTeamId()
+            );
         });
     }
 

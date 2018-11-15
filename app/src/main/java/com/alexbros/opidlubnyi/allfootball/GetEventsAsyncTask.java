@@ -75,15 +75,15 @@ public class GetEventsAsyncTask extends AsyncTask<String, Void, List<ListElement
 
                         participant = FeedParserHelper.parseEventParticipantJson(participants.getJSONObject(0));
                         listElement.setFirstTeamName(participant.name);
-                        listElement.setTeamOneId(participant.id);
-                        listElement.setTeamOneGoals(participant.goals);
-                        listElement.setTeamOneGoalsString(participant.goalsString);
+                        listElement.setFirstTeamId(participant.id);
+                        listElement.setFirstTeamGoals(participant.goals);
+                        listElement.setFirstTeamGoalsString(participant.goalsString);
 
                         participant = FeedParserHelper.parseEventParticipantJson(participants.getJSONObject(1));
                         listElement.setSecondTeamName(participant.name);
-                        listElement.setTeamTwoId(participant.id);
-                        listElement.setTeamTwoGoals(participant.goals);
-                        listElement.setTeamTwoGoalsString(participant.goalsString);
+                        listElement.setSecondTeamId(participant.id);
+                        listElement.setSecondTeamGoals(participant.goals);
+                        listElement.setSecondTeamGoalsString(participant.goalsString);
 
                         list.add(listElement);
                     }

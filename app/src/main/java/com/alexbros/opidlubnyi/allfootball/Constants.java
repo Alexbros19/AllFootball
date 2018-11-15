@@ -1,7 +1,6 @@
 package com.alexbros.opidlubnyi.allfootball;
 
 public class Constants {
-    public static final String BUTTONS_CONTEXT_ACTIVITY_PARAM = "element_number";
     public static final String TODAY_RESPONSE = "https://server.thelivescoreapp.com/api/v1/android/events/getOverview?day=0&offset=7200&language=uk&timestamp=0";
     public static final String YESTERDAY_RESPONSE = "https://server.thelivescoreapp.com/api/v1/android/events/getOverview?day=-1&offset=7200&language=uk&timestamp=0";
     public static final String TOMORROW_RESPONSE = "https://server.thelivescoreapp.com/api/v1/android/events/getOverview?day=1&offset=7200&language=uk&timestamp=0";
@@ -14,4 +13,7 @@ public class Constants {
     public static final String BROADCAST_ACTION_REDRAW_SCORES = "BROADCAST_ACTION_REDRAW_SCORES";
 
     public static String BACKGROUND_IMAGEVIEW_TAG = "background";
+
+    public static final String INTENT_EXTRA_FIRST_TEAM_ID = "INTENT_EXTRA_FIRST_TEAM_ID";
+    public static final String INTENT_EXTRA_SECOND_TEAM_ID = "INTENT_EXTRA_SECOND_TEAM_ID";
 }
