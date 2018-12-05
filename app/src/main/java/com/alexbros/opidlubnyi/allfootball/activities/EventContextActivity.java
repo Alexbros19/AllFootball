@@ -1,9 +1,13 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.alexbros.opidlubnyi.allfootball.Constants;
+import com.alexbros.opidlubnyi.allfootball.R;
+import com.alexbros.opidlubnyi.allfootball.fragments.EventContextFragment;
 
 public class EventContextActivity extends AppCompatActivity {
     public static void showActivity(Activity activity, String firstTeamId, String secondTeamId) {

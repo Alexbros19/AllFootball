@@ -1,7 +1,8 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.async_tasks;
 
 import android.os.AsyncTask;
 
+import com.alexbros.opidlubnyi.allfootball.models.TeamProfile;
 import com.alexbros.opidlubnyi.allfootball.helpers.FeedParserHelper;
 import com.alexbros.opidlubnyi.allfootball.helpers.URLContentHelper;
 

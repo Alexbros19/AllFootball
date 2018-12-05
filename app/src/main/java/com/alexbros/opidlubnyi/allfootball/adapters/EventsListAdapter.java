@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alexbros.opidlubnyi.allfootball.EventContextActivity;
-import com.alexbros.opidlubnyi.allfootball.EventView;
-import com.alexbros.opidlubnyi.allfootball.ListElement;
+import com.alexbros.opidlubnyi.allfootball.activities.EventContextActivity;
+import com.alexbros.opidlubnyi.allfootball.views.EventView;
+import com.alexbros.opidlubnyi.allfootball.models.ListElement;
 import com.alexbros.opidlubnyi.allfootball.R;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class EventsListAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_event_list_item, parent, false);
+        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_list_item, parent, false);
         return new EventsViewHolder(row);
     }
 

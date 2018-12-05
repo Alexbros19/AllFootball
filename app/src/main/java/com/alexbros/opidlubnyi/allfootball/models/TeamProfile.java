@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.models;
 
 import java.util.LinkedHashMap;
 

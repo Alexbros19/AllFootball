@@ -1,10 +1,12 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.async_tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
+import com.alexbros.opidlubnyi.allfootball.Constants;
+import com.alexbros.opidlubnyi.allfootball.models.ListElement;
 import com.alexbros.opidlubnyi.allfootball.helpers.FeedParserHelper;
 import com.alexbros.opidlubnyi.allfootball.helpers.UrlHelper;
 
@@ -26,7 +28,7 @@ public class GetEventsAsyncTask extends AsyncTask<String, Void, List<ListElement
         void onError(int position);
     }
 
-    GetEventsAsyncTask(Context context, Handler endHandler, OnCompleteListener onCompleteListener, int eventsListPagePosition) {
+    public GetEventsAsyncTask(Context context, Handler endHandler, OnCompleteListener onCompleteListener, int eventsListPagePosition) {
         this.context = context;
         this.endHandler = endHandler;
         this.onCompleteListener = onCompleteListener;

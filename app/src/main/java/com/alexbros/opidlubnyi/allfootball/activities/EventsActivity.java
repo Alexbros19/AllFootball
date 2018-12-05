@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.activities;
 
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.alexbros.opidlubnyi.allfootball.R;
 
 import java.util.Objects;
 

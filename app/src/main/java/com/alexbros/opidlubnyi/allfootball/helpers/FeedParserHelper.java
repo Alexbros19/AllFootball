@@ -2,7 +2,7 @@ package com.alexbros.opidlubnyi.allfootball.helpers;
 
 import android.content.Context;
 
-import com.alexbros.opidlubnyi.allfootball.ListElement;
+import com.alexbros.opidlubnyi.allfootball.models.ListElement;
 import com.alexbros.opidlubnyi.allfootball.R;
 
 import org.json.JSONException;

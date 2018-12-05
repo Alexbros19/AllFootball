@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -29,14 +29,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import com.alexbros.opidlubnyi.allfootball.Constants;
+import com.alexbros.opidlubnyi.allfootball.PeriodicalTimer;
+import com.alexbros.opidlubnyi.allfootball.R;
 import com.alexbros.opidlubnyi.allfootball.adapters.EventsListAdapter;
 import com.alexbros.opidlubnyi.allfootball.adapters.EventsListHorizontalPageAdapter;
+import com.alexbros.opidlubnyi.allfootball.async_tasks.GetEventsAsyncTask;
 import com.alexbros.opidlubnyi.allfootball.dialogs.FilterDialog;
 import com.alexbros.opidlubnyi.allfootball.helpers.URLContentHelper;
+import com.alexbros.opidlubnyi.allfootball.models.ListElement;
+import com.alexbros.opidlubnyi.allfootball.models.ModelData;
 import com.alexbros.opidlubnyi.allfootball.views.PagerSlidingTabStrip;
 import com.alexbros.opidlubnyi.allfootball.views.ZoomOutPageTransformer;
 
-import com.alexbros.opidlubnyi.allfootball.GetEventsAsyncTask.OnCompleteListener;
+import com.alexbros.opidlubnyi.allfootball.async_tasks.GetEventsAsyncTask.OnCompleteListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

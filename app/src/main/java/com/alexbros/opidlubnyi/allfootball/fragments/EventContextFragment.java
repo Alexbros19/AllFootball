@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,6 +16,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alexbros.opidlubnyi.allfootball.Constants;
+import com.alexbros.opidlubnyi.allfootball.R;
+import com.alexbros.opidlubnyi.allfootball.async_tasks.GetTeamProfileAsyncTask;
+import com.alexbros.opidlubnyi.allfootball.models.TeamProfile;
 import com.alexbros.opidlubnyi.allfootball.views.ChannelImageView;
 
 public class EventContextFragment extends Fragment {

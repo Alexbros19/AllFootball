@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.views;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,9 +12,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alexbros.opidlubnyi.allfootball.Colors;
+import com.alexbros.opidlubnyi.allfootball.models.ListElement;
+import com.alexbros.opidlubnyi.allfootball.R;
 import com.alexbros.opidlubnyi.allfootball.picasso.TeamLogoImageView;
-import com.alexbros.opidlubnyi.allfootball.views.EventLayout;
-import com.alexbros.opidlubnyi.allfootball.views.EventStatusView;
 
 public class EventView extends LinearLayout {
     private TextView homeTeamTextView;
@@ -42,7 +43,7 @@ public class EventView extends LinearLayout {
     }
 
     private void init(Context context) {
-        inflate(context, R.layout.fragment_event_list_item_impl, this);
+        inflate(context, R.layout.event_list_item_impl, this);
         eventLayout = findViewById(R.id.eventLayout);
         homeTeamTextView = eventLayout.findViewById(R.id.homeTeamTextView);
         awayTeamTextView = eventLayout.findViewById(R.id.awayTeamTextView);

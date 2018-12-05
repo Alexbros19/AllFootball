@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.alexbros.opidlubnyi.allfootball.Colors;
 import com.alexbros.opidlubnyi.allfootball.Constants;
-import com.alexbros.opidlubnyi.allfootball.ModelData;
+import com.alexbros.opidlubnyi.allfootball.models.ModelData;
 import com.alexbros.opidlubnyi.allfootball.R;
 
 public class FilterDialog {

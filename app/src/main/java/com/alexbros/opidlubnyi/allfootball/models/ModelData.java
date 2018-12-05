@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.models;
 
 public class ModelData {
     public boolean onlyLiveGamesFilterEnabled = false;

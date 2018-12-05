@@ -1,4 +1,4 @@
-package com.alexbros.opidlubnyi.allfootball;
+package com.alexbros.opidlubnyi.allfootball.models;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -33,7 +33,7 @@ public class ListElement implements Serializable {
     public boolean firstHalftime;
     public boolean secondHalftime;
 
-    ListElement() {
+    public ListElement() {
     }
 
     // Check if event is running
@@ -171,7 +171,7 @@ public class ListElement implements Serializable {
     }
 
     public static final class TimeOrderComparator implements Comparator<ListElement> {
-        TimeOrderComparator() {}
+        public TimeOrderComparator() {}
 
         @Override
         public int compare(ListElement o1, ListElement o2) {
