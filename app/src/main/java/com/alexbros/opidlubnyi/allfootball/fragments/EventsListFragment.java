@@ -5,12 +5,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
@@ -35,19 +35,20 @@ import com.alexbros.opidlubnyi.allfootball.R;
 import com.alexbros.opidlubnyi.allfootball.adapters.EventsListAdapter;
 import com.alexbros.opidlubnyi.allfootball.adapters.EventsListHorizontalPageAdapter;
 import com.alexbros.opidlubnyi.allfootball.async_tasks.GetEventsAsyncTask;
+import com.alexbros.opidlubnyi.allfootball.async_tasks.GetEventsAsyncTask.OnCompleteListener;
 import com.alexbros.opidlubnyi.allfootball.dialogs.FilterDialog;
 import com.alexbros.opidlubnyi.allfootball.helpers.URLContentHelper;
-import com.alexbros.opidlubnyi.allfootball.models.ListElement;
+import com.alexbros.opidlubnyi.allfootball.models.EventsListItem;
+import com.alexbros.opidlubnyi.allfootball.models.League;
 import com.alexbros.opidlubnyi.allfootball.models.ModelData;
 import com.alexbros.opidlubnyi.allfootball.views.PagerSlidingTabStrip;
 import com.alexbros.opidlubnyi.allfootball.views.ZoomOutPageTransformer;
-
-import com.alexbros.opidlubnyi.allfootball.async_tasks.GetEventsAsyncTask.OnCompleteListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class EventsListFragment extends Fragment implements SearchView.OnQueryTextListener {
     private static final long AUTO_REFRESH_DELAY = 120000;
@@ -63,9 +64,10 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
     private SearchView searchView;
     private MenuItem refreshMenuItem;
     private MenuItem filterMenuItem;
-    private List<ListElement> listElements = new ArrayList();
     private boolean isRunningEvent = false;
     private ModelData model;
+    private List<Object> eventsListDataSet = null;
+    private EventsListItem.EventsListLeague lastEventsListLeague = null;
 
     private PeriodicalTimer autoUpdateTimer = null;
     private Runnable autoUpdateTimerTask = this::reloadCurrentViewFromServer;
@@ -159,7 +161,7 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
     public void onResume() {
         super.onResume();
         toolbar.setTitle(getString(R.string.app_name));
-        (new GetEventsAsyncTask(getContext(),null, getEventsListListener, 1)).execute(Constants.TODAY_RESPONSE);
+        (new GetEventsAsyncTask(getContext(), null, getEventsListListener, 1)).execute();
 
         if (autoUpdateTimer == null)
             autoUpdateTimer = new PeriodicalTimer(AUTO_REFRESH_DELAY, autoUpdateTimerTask);
@@ -193,13 +195,13 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
     @Override
     public boolean onQueryTextChange(String newText) {
         String userInput = newText.toLowerCase();
-        List<ListElement> newList = new ArrayList<>();
+        List<Object> newList = new ArrayList<>();
 
-        for (ListElement listElement : listElements) {
-            if (listElement.getFirstTeamName().toLowerCase().contains(userInput) || listElement.getSecondTeamName().toLowerCase().contains(userInput)) {
-                newList.add(listElement);
-            }
-        }
+//        for (Event event : events) {
+//            if (event.getFirstTeamName().toLowerCase().contains(userInput) || event.getSecondTeamName().toLowerCase().contains(userInput)) {
+//                newList.add(event);
+//            }
+//        }
 
         View currentView = views.get(currentEventsList);
         RecyclerView recyclerViewEventsList = currentView.findViewById(R.id.recyclerViewEventsList);
@@ -258,18 +260,6 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
         });
     }
 
-    private List<ListElement> redrawLiveEvents(List<ListElement> list) {
-        List<ListElement> newList = new ArrayList<>();
-
-        for (ListElement listElement : list) {
-            if (model.onlyLiveGamesFilterEnabled && listElement.running) {
-                newList.add(listElement);
-            }
-        }
-
-        return newList;
-    }
-
     private void reloadScores() {
         long delay = AUTO_REFRESH_DELAY;
         if (isRunningEvent) {
@@ -288,17 +278,7 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
         setRefreshMenuItemLoading(true);
 
         try {
-            switch (currentEventsList) {
-                case 0:
-                    (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.YESTERDAY_RESPONSE);
-                    break;
-                case 1:
-                    (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.TODAY_RESPONSE);
-                    break;
-                case 2:
-                    (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute(Constants.TOMORROW_RESPONSE);
-                    break;
-            }
+            (new GetEventsAsyncTask(getContext(), parseScoreCompleteHandler, getEventsListListener, currentEventsList)).execute();
         } catch (OutOfMemoryError e) {
             setRefreshMenuItemLoading(false);
         }
@@ -337,7 +317,7 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
     }
 
     private void setListAdapter(RecyclerView recyclerView) {
-        EventsListAdapter eventsListAdapter = new EventsListAdapter(activity);
+        EventsListAdapter eventsListAdapter = new EventsListAdapter(activity, getContext());
         recyclerView.setAdapter(eventsListAdapter);
     }
 
@@ -357,30 +337,73 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
         public void onPageSelected(int position) {
             if (!isAdded())
                 return;
-            switch (position) {
-                case 0:
-                    (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.YESTERDAY_RESPONSE);
-                    currentEventsList = position;
-                    break;
-                case 1:
-                    (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.TODAY_RESPONSE);
-                    currentEventsList = position;
-                    break;
-                case 2:
-                    (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute(Constants.TOMORROW_RESPONSE);
-                    currentEventsList = position;
-                    break;
-            }
+
+            (new GetEventsAsyncTask(getContext(), null, getEventsListListener, position)).execute();
         }
     };
 
+    private List<Object> buildEventsList(EventsListItem event) {
+        if (eventsListDataSet == null)
+            eventsListDataSet = new ArrayList<>();
+        else
+            eventsListDataSet.clear();
+
+        for (EventsListItem.EventsListLeagues eventsListLeagues : event.leagues) {
+            lastEventsListLeague = null;
+
+            for (EventsListItem.EventsListLeague eventsListLeague : eventsListLeagues.leagues) {
+                if (shouldLeagueBeAdded(eventsListLeague) && !model.onlyLiveGamesFilterEnabled)
+                    eventsListDataSet.add(new ListItemLeague(eventsListLeague));
+
+                lastEventsListLeague = eventsListLeague;
+                Collections.sort(eventsListLeague.events, new EventsListItem.TimeOrderComparator());
+
+                if (model.onlyLiveGamesFilterEnabled) {
+                    for (EventsListItem.EventsListEvent eventsListEvent : eventsListLeague.events) {
+                        if (eventsListEvent.event.running)
+                            eventsListDataSet.add(new ListItemEvent(eventsListEvent));
+                    }
+                } else {
+                    for (EventsListItem.EventsListEvent eventsListEvent : eventsListLeague.events) {
+                        eventsListDataSet.add(new ListItemEvent(eventsListEvent));
+                    }
+                }
+            }
+        }
+
+        return eventsListDataSet;
+    }
+
+    private boolean shouldLeagueBeAdded(EventsListItem.EventsListLeague eventsListLeague) {
+        return lastEventsListLeague == null || !(lastEventsListLeague.league.id.equals(eventsListLeague.league.id)
+                && lastEventsListLeague.league.name.equals(eventsListLeague.league.name)
+                && lastEventsListLeague.league.country.equals(eventsListLeague.league.country));
+    }
+
+    public static class ListItemLeague {
+        public final League league;
+
+        ListItemLeague(EventsListItem.EventsListLeague eventsListLeague) {
+            league = eventsListLeague.league;
+        }
+    }
+
+    public static class ListItemEvent {
+        public final EventsListItem.EventsListEvent eventsListEvent;
+
+        ListItemEvent(EventsListItem.EventsListEvent predictionEvent) {
+            this.eventsListEvent = predictionEvent;
+        }
+    }
+
     private OnCompleteListener getEventsListListener = new OnCompleteListener() {
         @Override
-        public void onSuccess(List<ListElement> eventsList, int position) {
+        public void onSuccess(EventsListItem event, int position) {
             if (!isAdded())
                 return;
 
             tabPageIndicator.notifyDataSetChanged();
+            lastEventsListLeague = null;
 
             View currentView = views.get(position);
             currentView.findViewById(R.id.progressBarLayoutEventsList).setVisibility(View.GONE);
@@ -389,16 +412,15 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
             View notificationNoDataEventsList = currentView.findViewById(R.id.notificationNoDataEventsList);
             View notificationNoMatchesFilter = currentView.findViewById(R.id.notificationNoMatchesFilter);
 
-            if (eventsList == null) {
+            if (event == null || event.leagues.get(0).leagues.isEmpty()) {
                 recyclerViewEventsList.setVisibility(View.GONE);
                 notificationNoDataEventsList.setVisibility(View.VISIBLE);
             } else {
                 EventsListAdapter eventsListAdapter = (EventsListAdapter) recyclerViewEventsList.getAdapter();
-                Collections.sort(eventsList, new ListElement.TimeOrderComparator());
 
                 if (model.onlyLiveGamesFilterEnabled) {
-                    eventsListAdapter.setData(redrawLiveEvents(eventsList));
-                    if (redrawLiveEvents(eventsList).size() == 0) {
+                    Objects.requireNonNull(eventsListAdapter).setData(buildEventsList(event));
+                    if (buildEventsList(event).isEmpty()) {
                         recyclerViewEventsList.setVisibility(View.GONE);
                         notificationNoDataEventsList.setVisibility(View.GONE);
                         notificationNoMatchesFilter.setVisibility(View.VISIBLE);
@@ -408,12 +430,11 @@ public class EventsListFragment extends Fragment implements SearchView.OnQueryTe
                         notificationNoMatchesFilter.setVisibility(View.GONE);
                     }
                 } else {
-                    eventsListAdapter.setData(eventsList);
+                    Objects.requireNonNull(eventsListAdapter).setData(buildEventsList(event));
                     recyclerViewEventsList.setVisibility(View.VISIBLE);
                     notificationNoDataEventsList.setVisibility(View.GONE);
                     notificationNoMatchesFilter.setVisibility(View.GONE);
                 }
-                listElements = eventsList;
             }
         }
 

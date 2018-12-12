@@ -11,7 +11,7 @@ import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_R
 import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_SECOND_HALF;
 import static com.alexbros.opidlubnyi.allfootball.enums.EventStatusEnum.STATUS_UPCOMING;
 
-public class ListElement implements Serializable {
+public class Event implements Serializable {
     private String firstTeamName = "";
     private String secondTeamName = "";
     private String minute = "";
@@ -33,7 +33,7 @@ public class ListElement implements Serializable {
     public boolean firstHalftime;
     public boolean secondHalftime;
 
-    public ListElement() {
+    public Event() {
     }
 
     // Check if event is running
@@ -170,17 +170,12 @@ public class ListElement implements Serializable {
         return minute;
     }
 
-    public static final class TimeOrderComparator implements Comparator<ListElement> {
-        public TimeOrderComparator() {}
-
-        @Override
-        public int compare(ListElement o1, ListElement o2) {
-            if (o1.utcStartTime > o2.utcStartTime)
-                return +1;
-            else if (o1.utcStartTime < o2.utcStartTime)
-                return -1;
-            else
-                return 0;
-        }
-    }
+//    public static final class TimeOrderComparator implements Comparator<Event> {
+//        public TimeOrderComparator() {}
+//
+//        @Override
+//        public int compare(Event o1, Event o2) {
+//            return Long.compare(o1.utcStartTime, o2.utcStartTime);
+//        }
+//    }
 }

@@ -13,11 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alexbros.opidlubnyi.allfootball.Colors;
-import com.alexbros.opidlubnyi.allfootball.models.ListElement;
 import com.alexbros.opidlubnyi.allfootball.R;
+import com.alexbros.opidlubnyi.allfootball.models.EventsListItem;
 import com.alexbros.opidlubnyi.allfootball.picasso.TeamLogoImageView;
 
-public class EventView extends LinearLayout {
+public class EventsListEventItemView extends LinearLayout {
     private TextView homeTeamTextView;
     private TextView awayTeamTextView;
     private TextView scoreTextView;
@@ -27,17 +27,17 @@ public class EventView extends LinearLayout {
     private Typeface scoreTextViewDefaultTypeface;
     private EventLayout eventLayout;
 
-    public EventView(Context context) {
+    public EventsListEventItemView(Context context) {
         super(context);
         init(context);
     }
 
-    public EventView(Context context, @Nullable AttributeSet attrs) {
+    public EventsListEventItemView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public EventView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public EventsListEventItemView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -58,19 +58,19 @@ public class EventView extends LinearLayout {
         statusTextView.setIsScores();
     }
 
-    public void setElement(ListElement listElement) {
-        homeTeamTextView.setText(listElement.getFirstTeamName());
-        awayTeamTextView.setText(listElement.getSecondTeamName());
-        TeamLogoImageView.setTeamImage(getContext(), homeTeamImageView, listElement.getFirstTeamId(), true);
-        TeamLogoImageView.setTeamImage(getContext(), awayTeamImageView, listElement.getSecondTeamId(), true);
+    public void setData(EventsListItem.EventsListEvent event) {
+        homeTeamTextView.setText(event.event.getFirstTeamName());
+        awayTeamTextView.setText(event.event.getSecondTeamName());
+        TeamLogoImageView.setTeamImage(getContext(), homeTeamImageView, event.event.getFirstTeamId(), true);
+        TeamLogoImageView.setTeamImage(getContext(), awayTeamImageView, event.event.getSecondTeamId(), true);
 
-        statusTextView.setStatusText(listElement.status);
+        statusTextView.setStatusText(event.event.status);
 
-        if (listElement.running || listElement.finished) {
+        if (event.event.running || event.event.finished) {
             scoreTextView.setTypeface(scoreTextViewDefaultTypeface, Typeface.BOLD);
             final SpannableStringBuilder goals = new SpannableStringBuilder();
             int startIndex = goals.length();
-            goals.append(listElement.getFirstTeamGoalsString().trim());
+            goals.append(event.event.getFirstTeamGoalsString().trim());
             goals.setSpan(new ForegroundColorSpan(Colors.textColorThird), startIndex, goals.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             startIndex = goals.length();
@@ -78,7 +78,7 @@ public class EventView extends LinearLayout {
             goals.setSpan(new ForegroundColorSpan(Colors.textColorThird), startIndex, goals.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             startIndex = goals.length();
-            goals.append(listElement.getSecondTeamGoalsString().trim());
+            goals.append(event.event.getSecondTeamGoalsString().trim());
             goals.setSpan(new ForegroundColorSpan(Colors.textColorThird), startIndex, goals.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             scoreTextView.setText(goals);
         } else {
@@ -86,10 +86,10 @@ public class EventView extends LinearLayout {
             scoreTextView.setText("- : -");
         }
 
-        if (listElement.running) {
+        if (event.event.running) {
             eventLayout.setBackgroundColors(Colors.eventListStatusBackgroundColorRunning, Color.WHITE, statusTextView.getLayoutParams().width);
             statusTextView.setTextColor(Colors.textColorThird);
-        } else if (listElement.halftime || listElement.firstHalftime || listElement.secondHalftime) {
+        } else if (event.event.halftime || event.event.firstHalftime || event.event.secondHalftime) {
             eventLayout.setBackgroundColors(Colors.eventListStatusBackgroundColorHalftime, Color.WHITE, statusTextView.getLayoutParams().width);
             statusTextView.setTextColor(Colors.textColorThird);
         } else {

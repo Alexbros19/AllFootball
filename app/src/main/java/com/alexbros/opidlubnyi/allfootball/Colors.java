@@ -7,4 +7,7 @@ public class Colors {
     public static int textColorThird = 0xff303030;
     public static int eventListStatusBackgroundColorRunning = 0xff5ba465;
     public static int eventListStatusBackgroundColorHalftime = 0xFFfff4b4;
+
+    public static int eventListBarColorWhiteTheme = 0xffdfdfdf;
+    public static int eventListTitleColorWhiteTheme = 0xffefefef;
 }
