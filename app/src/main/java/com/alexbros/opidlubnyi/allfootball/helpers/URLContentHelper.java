@@ -144,4 +144,10 @@ public class URLContentHelper {
 //        else
 //            return "";
 //    }
+
+    public static String getOverviewResponse(int day) throws Exception {
+        String url = "https://server.thelivescoreapp.com/api/v1/android/events/getOverview?day=" + day + "&offset=7200&language=uk&timestamp=0";
+
+        return getAllAsOneLineUrlResponse(url);
+    }
 }

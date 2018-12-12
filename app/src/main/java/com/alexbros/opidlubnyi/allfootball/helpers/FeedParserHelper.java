@@ -2,7 +2,7 @@ package com.alexbros.opidlubnyi.allfootball.helpers;
 
 import android.content.Context;
 
-import com.alexbros.opidlubnyi.allfootball.models.ListElement;
+import com.alexbros.opidlubnyi.allfootball.models.Event;
 import com.alexbros.opidlubnyi.allfootball.R;
 
 import org.json.JSONException;
@@ -59,9 +59,9 @@ public class FeedParserHelper {
         return jsonObject.isNull(name) ? "" : jsonObject.optString(name, "");
     }
 
-    public static String getEventStatusText(Context context, ListElement listElement) {
-        final long statusId = listElement.getStatusId();
-        final boolean hasTimeInfo = listElement.getMinute().equals("0");
+    public static String getEventStatusText(Context context, Event event) {
+        final long statusId = event.getStatusId();
+        final boolean hasTimeInfo = event.getMinute().equals("0");
 
         String status = "";
         if ((statusId & STATUS_HALF_TIME.getFlag()) != 0)
@@ -91,13 +91,13 @@ public class FeedParserHelper {
         else if ((statusId & STATUS_ABANDONED.getFlag()) != 0)
             status = context.getString(R.string.string_match_status_abandoned);
         else {
-            if (listElement.isRunning())
-                status = listElement.getFormattedMinute();
-            else if (listElement.isUpcoming())
-                status = DateHelper.getFormattedTime(context, listElement.getUtcStartTime());
-            else if (listElement.isFinished())
+            if (event.isRunning())
+                status = event.getFormattedMinute();
+            else if (event.isUpcoming())
+                status = DateHelper.getFormattedTime(context, event.getUtcStartTime());
+            else if (event.isFinished())
                 status = context.getString(R.string.string_match_status_full_time);
-            else if (listElement.isCancelled())
+            else if (event.isCancelled())
                 status = context.getString(R.string.string_match_status_cancelled);
         }
 
