@@ -3,6 +3,7 @@ package com.alexbros.opidlubnyi.allfootball.picasso;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -16,11 +17,15 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+import com.alexbros.opidlubnyi.allfootball.Colors;
 import com.alexbros.opidlubnyi.allfootball.R;
+import com.alexbros.opidlubnyi.allfootball.models.UserProfile;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 public class PicassoImageView {
+    private static final float CIRCLE_SIZE_IN_PERCENT = 0.05f;
+
     public static class BlurTransform implements Transformation {
         RenderScript rs;
         private Context mContext;
@@ -95,6 +100,64 @@ public class PicassoImageView {
         rs.destroy();
         return outBitmap;
     }
+
+    public static class CircleTransform implements Transformation {
+        private int userStatus = UserProfile.STATUS_TYPE_NONE;
+
+        public CircleTransform(int userStatus) {
+            this.userStatus = userStatus;
+        }
+
+        @Override
+        public Bitmap transform(Bitmap source) {
+            int size = Math.min(source.getWidth(), source.getHeight());
+
+            int x = (source.getWidth() - size) / 2;
+            int y = (source.getHeight() - size) / 2;
+
+            Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
+            if (squaredBitmap != source) {
+                source.recycle();
+            }
+            Bitmap bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
+
+            Canvas canvas = new Canvas(bitmap);
+            Paint paint = new Paint();
+            BitmapShader shader = new BitmapShader(squaredBitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
+            paint.setShader(shader);
+            paint.setAntiAlias(true);
+
+            float r = size / 2f;
+            canvas.drawCircle(r, r, r, paint);
+            if (UserProfile.STATUS_TYPE_NONE != userStatus) {
+                Paint paintStroke = new Paint();
+                paintStroke.setAntiAlias(true);
+                if (UserProfile.STATUS_TYPE_BRONZE == userStatus)
+                    paintStroke.setColor(Colors.bronzeColor);
+                else if (UserProfile.STATUS_TYPE_SILVER == userStatus)
+                    paintStroke.setColor(Colors.silverColor);
+                else if (UserProfile.STATUS_TYPE_GOLD == userStatus)
+                    paintStroke.setColor(Colors.goldColor);
+                else if (UserProfile.STATUS_TYPE_PLATINUM == userStatus)
+                    paintStroke.setColor(Colors.platinumColor);
+                else if (UserProfile.STATUS_TYPE_DIAMOND == userStatus)
+                    paintStroke.setColor(Colors.diamondColor);
+
+                paintStroke.setStyle(Paint.Style.STROKE);
+                float stroke = size * CIRCLE_SIZE_IN_PERCENT;
+                paintStroke.setStrokeWidth(stroke);
+                canvas.drawCircle(r, r, r - (stroke / 2), paintStroke);
+            }
+            squaredBitmap.recycle();
+            return bitmap;
+        }
+
+        @Override
+        public String key() {
+            return "circle" + userStatus;
+        }
+    }
+
 
     public static Picasso getPicasso(Context context) {
         return PicassoHolder.getInstance().getPicasso(context);

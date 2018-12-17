@@ -38,4 +38,5 @@
     <string name="string_match_status_full_time">"FT"</string>
     <string name="string_match_status_cancelled">"Cancl."</string>
     <string name="string_final_result_only">"FRO" </string>
+    <string name="string_draw">"Draw"</string>
 </resources>

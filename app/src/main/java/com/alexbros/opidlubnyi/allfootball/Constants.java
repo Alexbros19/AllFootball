@@ -16,4 +16,7 @@ public class Constants {
 
     public static final String INTENT_EXTRA_FIRST_TEAM_ID = "INTENT_EXTRA_FIRST_TEAM_ID";
     public static final String INTENT_EXTRA_SECOND_TEAM_ID = "INTENT_EXTRA_SECOND_TEAM_ID";
+
+    public static final String BROADCAST_ACTION_CONFIG_LOAD_SUCCESS = "BROADCAST_ACTION_CONFIG_LOAD_SUCCESS";
+    public static final String BROADCAST_ACTION_CONFIG_LOAD_FAILED = "BROADCAST_ACTION_CONFIG_LOAD_FAILED";
 }

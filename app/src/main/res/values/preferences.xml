@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_cfg_hasConfig" translatable="false">cfg_hasConfig</string>
+    <string name="pref_cfg_isFirstStartSession" translatable="false">cfg_isFirstStartSession</string>
+
+    <string name="pref_cfg_base_api_url" translatable="false">cfg_base_api_url</string>
+    <string name="pref_cfg_base_media_url" translatable="false">cfg_base_media_url</string>
+    <string name="pref_cfg_base_user_picture_url" translatable="false">cfg_base_user_picture_url</string>
+
+    <string name="pref_cfg_configuration_updatePeriod" translatable="false">cfg_configuration_updatePeriod</string>
+
+    <string name="pref_cfg_logos_getTeamLogos" translatable="false">cfg_logos_getTeamLogos</string>
+    <string name="pref_cfg_logos_getPlayerPics" translatable="false">cfg_logos_getPlayerPics</string>
+    <string name="pref_cfg_logos_getUserPics" translatable="false">cfg_logos_getUserPics</string>
+</resources>
