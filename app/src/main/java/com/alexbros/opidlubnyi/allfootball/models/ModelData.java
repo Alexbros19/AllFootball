@@ -2,6 +2,7 @@ package com.alexbros.opidlubnyi.allfootball.models;
 
 public class ModelData {
     public boolean onlyLiveGamesFilterEnabled = false;
+    public float displayDensity = 1;
 
     // Singleton
     private static ModelData instance;

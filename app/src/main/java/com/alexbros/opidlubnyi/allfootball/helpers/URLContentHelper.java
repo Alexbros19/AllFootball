@@ -4,12 +4,17 @@ package com.alexbros.opidlubnyi.allfootball.helpers;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.util.Log;
 
+import com.alexbros.opidlubnyi.allfootball.models.ModelData;
 import com.alexbros.opidlubnyi.allfootball.util.ObfuscatedString;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -46,7 +51,7 @@ public class URLContentHelper {
     }
 
     private static String getAllAsOneLineUrlResponse(String url) throws Exception {
-        ArrayList<String> lines = getUrlResponse(url);
+        ArrayList<String> lines = getUrlResponse(url, null, null);
         if (lines != null && !lines.isEmpty()) {
             StringBuilder all = new StringBuilder();
             for (String line : lines)
@@ -58,8 +63,15 @@ public class URLContentHelper {
         }
     }
 
-    private static ArrayList<String> getUrlResponse(String url) throws Exception {
+    private static ArrayList<String> getUrlResponse(String url, PostData postData, ModelData model) throws Exception {
         try {
+//            if (BuildConfig.DEBUG) {
+//                Log.d("URL", url);
+//
+//                if (postData != null)
+//                    Log.d("POST data", "\"" + postData.data + "\"");
+//            }
+
             final String proxyAddress = System.getProperty("http.proxyHost");
             final String proxyPort = System.getProperty("https.proxyPort");
 
@@ -72,10 +84,10 @@ public class URLContentHelper {
 
             if (url.startsWith("https")) {
                 HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection(proxy);
-                return getUrlResponse(connection);
+                return getUrlResponse(connection, postData, model);
             } else {
                 HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection(proxy);
-                return getUrlResponse(connection);
+                return getUrlResponse(connection, postData, model);
             }
         } catch (OutOfMemoryError e) {
             MemoryCacheCleaner.clean();
@@ -84,7 +96,7 @@ public class URLContentHelper {
         }
     }
 
-    private static ArrayList<String> getUrlResponse(HttpURLConnection connection) throws Exception {
+    private static ArrayList<String> getUrlResponse(HttpURLConnection connection, PostData postData, ModelData model) throws Exception {
         connection.setReadTimeout(CONNECTION_TIMEOUT);
         connection.setConnectTimeout(CONNECTION_TIMEOUT);
 
@@ -95,26 +107,31 @@ public class URLContentHelper {
         connection.addRequestProperty(getAllGoalsClientHeader(), getAllGoalsClientHeaderValue());
         connection.setRequestProperty("Accept-Encoding", "gzip, deflate");
 //        connection.setRequestProperty("User-Agent", checkString(Build.MANUFACTURER) + "/" + checkString(Build.MODEL) + "/" + checkString(Build.VERSION.RELEASE) + "/" + Build.VERSION.SDK_INT + "/TLA " + model.versionName + ", gzip");
-        //connection.setRequestProperty("Connection", "close");
-//        if (postData != null) {
-//            connection.setRequestMethod("POST");
-//            connection.setDoOutput(true);
-//
-//            if (postData.utf8) {
-//                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-//
-//                OutputStream outputStream = connection.getOutputStream();
-//                outputStream.write(postData.data.getBytes("UTF-8"));
-//                outputStream.flush();
-//                outputStream.close();
-//            } else {
-//                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(connection.getOutputStream());
-//                outputStreamWriter.write(postData.data);
-//                outputStreamWriter.flush();
-//                outputStreamWriter.close();
+//        if (BuildConfig.ENABLE_DEV_SETTINGS) {
+//            if (!model.dev_geoCountryCode.isEmpty()) {
+//                connection.setRequestProperty("X-AppEngine-Country", model.dev_geoCountryCode);
 //            }
-//
 //        }
+        //connection.setRequestProperty("Connection", "close");
+        if (postData != null) {
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+
+            if (postData.utf8) {
+                connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+
+                OutputStream outputStream = connection.getOutputStream();
+                outputStream.write(postData.data.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+            } else {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(connection.getOutputStream());
+                outputStreamWriter.write(postData.data);
+                outputStreamWriter.flush();
+                outputStreamWriter.close();
+            }
+
+        }
         ArrayList<String> lines = new ArrayList<>();
         InputStream inputStream = connection.getInputStream();
         String contentEncoding = connection.getHeaderField("Content-Encoding");
@@ -135,8 +152,20 @@ public class URLContentHelper {
         in.close();
         connection.disconnect();
 
+//        if (BuildConfig.ENABLE_DEV_SETTINGS) {
+//            if (model.dev_serverResponseDelay > 0) {
+//                try {
+//                    Log.d("DEV", "Adding server response delay " + model.dev_serverResponseDelay + " ms");
+//                    Thread.sleep(model.dev_serverResponseDelay);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+
         return lines;
     }
+
 
 //    private static String checkString(String s) {
 //        if (s != null)
@@ -149,5 +178,27 @@ public class URLContentHelper {
         String url = "https://server.thelivescoreapp.com/api/v1/android/events/getOverview?day=" + day + "&offset=7200&language=uk&timestamp=0";
 
         return getAllAsOneLineUrlResponse(url);
+    }
+
+    public static String getConfigResponse(String configURL, ModelData model) throws Exception {
+        return getAllAsOneLineUrlResponse(configURL, null, model);
+    }
+
+    private static String getAllAsOneLineUrlResponse(String url, PostData postData, ModelData model) throws Exception {
+        ArrayList<String> lines = getUrlResponse(url, postData, model);
+        if (lines != null && !lines.isEmpty()) {
+            String all = "";
+            for (String line : lines)
+                all += line;
+
+            return all;
+        } else {
+            return "";
+        }
+    }
+
+    private static class PostData {
+        String data = null;
+        boolean utf8 = false;
     }
 }

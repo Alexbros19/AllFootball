@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -15,9 +14,31 @@
     <LinearLayout
         android:id="@+id/officialChannelsLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/eventContentToolbar">
+        android:layout_height="wrap_content">
 
         <include layout="@layout/official_channels" />
     </LinearLayout>
-</RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FF303030" />
+
+    <com.alexbros.opidlubnyi.allfootball.views.EventVotingShowResultsView
+        android:id="@+id/eventVotingShowResultsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textSizeSmall"
+        android:layout_marginLeft="@dimen/textSizeSmall"
+        android:layout_marginTop="@dimen/textSizeMedium"
+        android:layout_marginBottom="@dimen/textSizeMedium"
+        android:layout_marginEnd="@dimen/textSizeSmall"
+        android:layout_marginRight="@dimen/textSizeSmall"
+        android:visibility="visible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FF303030" />
+
+</LinearLayout>

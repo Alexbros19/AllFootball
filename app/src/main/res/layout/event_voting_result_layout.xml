@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.alexbros.opidlubnyi.allfootball.views.PredictionMessagesView
+        android:id="@+id/resultPredictionMessagesViewFlipper"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="0dp"
+        android:paddingStart="0dp"
+        android:paddingRight="12dp"
+        android:paddingEnd="12dp" />
+
+    <RelativeLayout
+        android:id="@+id/predictionVotingResultRelativeLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="6"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/predictionVotingTeamTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/predictionVotingPercentageTextView2"
+            android:layout_toStartOf="@+id/predictionVotingPercentageTextView2"
+            android:fontFamily="sans-serif-condensed"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textSize="@dimen/textSizeSmall"
+            tools:text="Team One" />
+
+        <TextView
+            android:id="@+id/predictionVotingPercentageTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textSize="@dimen/textSizeXSmall"
+            tools:text="30%" />
+
+        <com.alexbros.opidlubnyi.allfootball.views.VotingView
+            android:id="@+id/predictionVotingView1"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_below="@+id/predictionVotingPercentageTextView1"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="3dp" />
+
+        <TextView
+            android:id="@+id/predictionVotingTeamTextViewX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/predictionVotingView1"
+            android:layout_toLeftOf="@+id/predictionVotingPercentageTextViewX"
+            android:layout_toStartOf="@+id/predictionVotingPercentageTextViewX"
+            android:fontFamily="sans-serif-condensed"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="@string/string_draw"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:id="@+id/predictionVotingPercentageTextViewX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/predictionVotingView1"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textSize="@dimen/textSizeXSmall"
+            tools:text="50%" />
+
+        <com.alexbros.opidlubnyi.allfootball.views.VotingView
+            android:id="@+id/predictionVotingViewX"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_below="@+id/predictionVotingPercentageTextViewX"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="3dp" />
+
+        <TextView
+            android:id="@+id/predictionVotingTeamTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/predictionVotingViewX"
+            android:layout_toLeftOf="@+id/predictionVotingPercentageTextView2"
+            android:layout_toStartOf="@+id/predictionVotingPercentageTextView2"
+            android:fontFamily="sans-serif-condensed"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textSize="@dimen/textSizeSmall"
+            tools:text="Team Two" />
+
+        <TextView
+            android:id="@+id/predictionVotingPercentageTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/predictionVotingViewX"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textSize="@dimen/textSizeXSmall"
+            tools:text="20%" />
+
+        <com.alexbros.opidlubnyi.allfootball.views.VotingView
+            android:id="@+id/predictionVotingView2"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_below="@+id/predictionVotingPercentageTextView2"
+            android:layout_marginTop="3dp" />
+
+    </RelativeLayout>
+</LinearLayout>

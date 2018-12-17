@@ -19,8 +19,11 @@ import android.widget.TextView;
 import com.alexbros.opidlubnyi.allfootball.Constants;
 import com.alexbros.opidlubnyi.allfootball.R;
 import com.alexbros.opidlubnyi.allfootball.async_tasks.GetTeamProfileAsyncTask;
+import com.alexbros.opidlubnyi.allfootball.models.EventPrediction;
+import com.alexbros.opidlubnyi.allfootball.models.EventPredictionMessage;
 import com.alexbros.opidlubnyi.allfootball.models.TeamProfile;
 import com.alexbros.opidlubnyi.allfootball.views.ChannelImageView;
+import com.alexbros.opidlubnyi.allfootball.views.EventVotingShowResultsView;
 
 public class EventContextFragment extends Fragment {
     private String firstTeamProfileId = "";
@@ -28,6 +31,7 @@ public class EventContextFragment extends Fragment {
     private View rootView;
     private FragmentActivity activity;
     private boolean refreshData = true;
+    private EventVotingShowResultsView eventVotingShowResultsView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +52,38 @@ public class EventContextFragment extends Fragment {
         rootView = inflater.inflate(R.layout.event_list_context, container, false);
 
         Toolbar toolbar = rootView.findViewById(R.id.eventContentToolbar);
+
+        // Test data for showing voting results
+        eventVotingShowResultsView = rootView.findViewById(R.id.eventVotingShowResultsView);
+        EventPrediction eventPrediction = new EventPrediction();
+        for (int i = 0; i < 5; i++) {
+            EventPredictionMessage message = new EventPredictionMessage();
+
+            message.tip = "1";
+            message.message = "message: " + i;
+            message.userIdHash = "";
+            message.userName = "user name: " + i;
+            message.teamOneLocalized = "team one";
+            message.teamTwoLocalized = "team two";
+
+            eventPrediction.messages.add(message);
+
+            eventPrediction.teamOneLocalized = "Team one";
+            eventPrediction.teamTwoLocalized = "Team two";
+
+            eventPrediction.votes1 = 55;
+            eventPrediction.votesX = 15;
+            eventPrediction.votes2 = 30;
+
+            eventPrediction.votes1Percentage = 55;
+            eventPrediction.votesXPercentage = 15;
+            eventPrediction.votes2Percentage = 30;
+
+            eventPrediction.votes1PercentageString = "55";
+            eventPrediction.votesXPercentageString = "15";
+            eventPrediction.votes2PercentageString = "30";
+        }
+        eventVotingShowResultsView.setData(eventPrediction);
 
         DrawerArrowDrawable drawerArrowDrawable = new DrawerArrowDrawable(activity);
         drawerArrowDrawable.setDirection(DrawerArrowDrawable.ARROW_DIRECTION_START);
