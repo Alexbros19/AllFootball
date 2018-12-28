@@ -201,4 +201,19 @@ public class URLContentHelper {
         String data = null;
         boolean utf8 = false;
     }
+
+    public static ArrayList<String> getLiveOddsResponse(ModelData model, String eventId, String providerId) throws Exception {
+        String url = "https://server.thelivescoreapp.com/soccer/eventliveodds/3?eventId=" + eventId + "&providerId=" + providerId;
+        return getUrlResponse(url, null, model);
+    }
+
+    public static String getEventDetailResponse(ModelData model, String eventId) throws Exception {
+        String url = "https://server.thelivescoreapp.com/api/v1/android/events/getDetails?eventId=" + eventId
+                + "&userId="
+                + "&trend=false"
+                + "&calendar=false"
+                + "&showevent=true";
+
+        return getAllAsOneLineUrlResponse(url, null, model);
+    }
 }

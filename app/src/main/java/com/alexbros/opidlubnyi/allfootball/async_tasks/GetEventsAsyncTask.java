@@ -102,6 +102,7 @@ public class GetEventsAsyncTask extends AsyncTask<Void, Void, EventsListItem> {
                 eventsListEvent.event.setMinute(FeedParserHelper.getStringValueOrEmpty(eventsJsonObject, "minute"));
                 eventsListEvent.event.setUtcStartTime(FeedParserHelper.getLongValueOrNull(eventsJsonObject, "utcStartTime"));
                 eventsListEvent.event.setStatus(FeedParserHelper.getEventStatusText(context, eventsListEvent.event));
+                eventsListEvent.event.setEventId(FeedParserHelper.getStringValueOrEmpty(eventsJsonObject, "id"));
 
                 FeedParserHelper.EventParticipant participant;
 

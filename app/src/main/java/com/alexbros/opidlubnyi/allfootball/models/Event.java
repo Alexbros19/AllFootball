@@ -24,6 +24,7 @@ public class Event implements Serializable {
     private int secondTeamGoals = 0;
     private String firstTeamGoalsString = "";
     private String secondTeamGoalsString = "";
+    private String eventId = "";
 
     public boolean running;
     public boolean finished;
@@ -168,6 +169,14 @@ public class Event implements Serializable {
 
     public String getMinute() {
         return minute;
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
 //    public static final class TimeOrderComparator implements Comparator<Event> {
