@@ -39,4 +39,6 @@
     <string name="string_match_status_cancelled">"Cancl."</string>
     <string name="string_final_result_only">"FRO" </string>
     <string name="string_draw">"Draw"</string>
+    <string name="string_which_team_will_win_game">"Which team will win the game?" </string>
+    <string name="string_who_will_score_next_goal">"Which team will score the next goal?" </string>
 </resources>

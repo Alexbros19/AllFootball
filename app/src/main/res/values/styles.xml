@@ -35,4 +35,98 @@
         <!--<item name="android:background">@color/color_accent</item>-->
     </style>
 
+    <style name="TheLivescoreAppStyle.White_white" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!--<item name="android:colorPrimary">#ff5ba465</item>-->
+        <item name="colorPrimary">#ff5ba465</item>
+
+        <!-- darker variant for the status bar and contextual app bars -->
+        <!--<item name="android:colorPrimaryDark">#ff508f59</item>-->
+        <item name="colorPrimaryDark">#ff508f59</item>
+
+        <!-- theme UI controls like checkboxes and text fields -->
+        <!--<item name="android:colorAccent">#ff5ba465</item>-->
+        <item name="colorAccent">#ff5ba465</item>
+
+        <!--<item name="android:textCursorDrawable">@drawable/search_view_cursor</item>-->
+
+        <!-- remove 4.X actionbar -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
+
+        <!--<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>-->
+
+        <!--<item name="actionButtonStyle">@style/TheLivescoreAppStyle_ActionButtonStyle</item>-->
+        <!--<item name="android:actionButtonStyle">@style/TheLivescoreAppStyle_ActionButtonStyle</item>-->
+        <item name="android:dropDownItemStyle">@style/Base.Theme.AppCompat</item>
+        <item name="android:textColor">@color/color_activity_background_black</item>
+        <item name="android:spinnerStyle">@android:style/Widget.Holo.Light.Spinner</item>
+        <!--<item name="android:buttonStyle">@style/TheLivescoreAppStyle_ButtonStyle</item>-->
+
+        <item name="activity_background_color">@color/color_activity_background_light</item>
+
+        <!-- list item colors -->
+        <item name="main_text_color">@android:color/black</item>
+        <!--<item name="list_header_color">@color/list_header_color_white</item>-->
+        <!--<item name="list_item_background_color">@color/list_item_background_color_light</item>-->
+        <!--<item name="selected_background_color">@color/color_selected_background_light</item>-->
+        <!--<item name="list_item_selected_background_selector">@drawable/list_item_background_selector_light</item>-->
+
+        <item name="btn_round_edge_background_transparent">@drawable/btn_round_edge_background_transparent_light</item>
+
+        <!--<item name="list_item_background_selector">@drawable/list_item_leagues_sorting_selector_light</item>-->
+
+        <item name="android:itemBackground">@android:color/white</item>
+
+        <!--<item name="android:actionOverflowButtonStyle">@style/OverflowButtonCompat</item>-->
+
+        <!--<item name="cup_win">@drawable/cup_win</item>-->
+        <!--<item name="cup_final">@drawable/cup_final</item>-->
+
+
+        <!--<item name="playoff_size_8F_event">@dimen/playoff_size_8F_event_light</item>-->
+        <!--<item name="playoff_size_8F_side">@dimen/playoff_size_8F_side_light</item>-->
+        <!--<item name="playoff_size_8F_between_events">@dimen/playoff_size_8F_between_events_light</item>-->
+        <!--<item name="playoff_size_8F_middle">@dimen/playoff_size_8F_middle_light</item>-->
+
+        <!--<item name="playoff_size_8F_conn">@dimen/playoff_size_8F_conn_light</item>-->
+        <!--<item name="playoff_size_8F_conn_side">@dimen/playoff_size_8F_conn_side_light</item>-->
+        <!--<item name="playoff_size_8F_conn_middle">@dimen/playoff_size_8F_conn_middle_light</item>-->
+
+        <!--<item name="playoff_size_QF_event">@dimen/playoff_size_QF_event_light</item>-->
+        <!--<item name="playoff_size_QF_side">@dimen/playoff_size_QF_event_side_light</item>-->
+        <!--<item name="playoff_size_QF_middle">@dimen/playoff_size_QF_event_middle_light</item>-->
+
+        <!--<item name="playoff_size_QF_conn">@dimen/playoff_size_QF_conn_light</item>-->
+        <!--<item name="playoff_size_QF_conn_side">@dimen/playoff_size_QF_conn_side_light</item>-->
+
+        <!--<item name="playoff_size_SF_F_event">@dimen/playoff_size_SF_F_event_light</item>-->
+        <!--<item name="playoff_size_SF_F_side">@dimen/playoff_size_SF_F_side_light</item>-->
+        <!--<item name="playoff_size_SF_F_3rd_place_side_right">@dimen/playoff_size_SF_F_3rd_place_side_right_light</item>-->
+        <!--<item name="playoff_size_SF_F_3rd_place_event">@dimen/playoff_size_SF_F_3rd_place_event_light</item>-->
+        <!--<item name="playoff_size_SF_F_3rd_place_side_left">@dimen/playoff_size_SF_F_3rd_place_side_left_light</item>-->
+
+
+        <!--<item name="playoff_event_vertical">@drawable/vertical_retangle</item>-->
+        <!--<item name="playoff_event_horizontal">@drawable/horizontal_retangle</item>-->
+        <!--<item name="playoff_event_8F_connection_bottom_to_top">@drawable/double_line_2</item>-->
+        <!--<item name="playoff_event_8F_connection_top_to_bottom">@drawable/double_line_1</item>-->
+        <!--<item name="playoff_event_QF_connection_bottom_to_top">@drawable/double_line_2_mid</item>-->
+        <!--<item name="playoff_event_QF_connection_top_to_bottom">@drawable/double_line_1_mid</item>-->
+        <!--<item name="playoff_event_F_connection">@drawable/vertical_line</item>-->
+        <!--<item name="playoff_overlapping_offset_top">@dimen/playoff_overlapping_offset_top_light</item>-->
+        <!--<item name="playoff_overlapping_offset_bottom">@dimen/playoff_overlapping_offset_bottom_light</item>-->
+
+        <!--<item name="playoff_event_vertical_offset_left">@dimen/playoff_event_vertical_offset_left_light</item>-->
+        <!--<item name="playoff_event_vertical_offset_right">@dimen/playoff_event_vertical_offset_right_light</item>-->
+        <!--<item name="playoff_event_vertical_offset_bottom">@dimen/playoff_event_vertical_offset_bottom_light</item>-->
+        <!--<item name="playoff_event_vertical_offset_top">@dimen/playoff_event_vertical_offset_top_light</item>-->
+
+        <!--<item name="playoff_event_horizontal_offset_left">@dimen/playoff_event_horizontal_offset_left_light</item>-->
+        <!--<item name="playoff_event_horizontal_offset_right">@dimen/playoff_event_horizontal_offset_right_light</item>-->
+        <!--<item name="playoff_event_horizontal_offset_bottom">@dimen/playoff_event_horizontal_offset_bottom_light</item>-->
+        <!--<item name="playoff_event_horizontal_offset_top">@dimen/playoff_event_horizontal_offset_top_light</item>-->
+
+    </style>
+
 </resources>

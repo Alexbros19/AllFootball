@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -11,13 +12,12 @@
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <LinearLayout
-        android:id="@+id/officialChannelsLayout"
+    <com.alexbros.opidlubnyi.allfootball.views.EventDetailOddsView
+        android:id="@+id/eventDetailsOdds"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/official_channels" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <View
         android:layout_width="match_parent"
@@ -35,6 +35,19 @@
         android:layout_marginEnd="@dimen/textSizeSmall"
         android:layout_marginRight="@dimen/textSizeSmall"
         android:visibility="visible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FF303030" />
+
+    <LinearLayout
+        android:id="@+id/officialChannelsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/official_channels" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

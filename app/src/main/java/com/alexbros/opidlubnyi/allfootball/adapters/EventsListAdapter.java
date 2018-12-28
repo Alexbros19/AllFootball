@@ -68,7 +68,10 @@ public class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.Vi
             ((EventViewHolder) holder).eventsListEventItemView.setOnClickListener(view -> EventContextActivity.showActivity(
                     activity,
                     listItemEvent.eventsListEvent.event.getFirstTeamId(),
-                    listItemEvent.eventsListEvent.event.getSecondTeamId()
+                    listItemEvent.eventsListEvent.event.getSecondTeamId(),
+                    listItemEvent.eventsListEvent.event.isUpcoming(),
+                    listItemEvent.eventsListEvent.event.getUtcStartTime(),
+                    listItemEvent.eventsListEvent.event.getEventId()
             ));
         }
     }

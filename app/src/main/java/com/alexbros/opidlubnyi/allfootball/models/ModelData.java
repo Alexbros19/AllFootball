@@ -3,6 +3,7 @@ package com.alexbros.opidlubnyi.allfootball.models;
 public class ModelData {
     public boolean onlyLiveGamesFilterEnabled = false;
     public float displayDensity = 1;
+    public String oddFormat = "";
 
     // Singleton
     private static ModelData instance;

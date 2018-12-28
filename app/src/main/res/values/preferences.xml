@@ -12,4 +12,7 @@
     <string name="pref_cfg_logos_getTeamLogos" translatable="false">cfg_logos_getTeamLogos</string>
     <string name="pref_cfg_logos_getPlayerPics" translatable="false">cfg_logos_getPlayerPics</string>
     <string name="pref_cfg_logos_getUserPics" translatable="false">cfg_logos_getUserPics</string>
+
+    <string name="pref_odd_format_key" translatable="false">oddFormat</string>
+    <string name="pref_default_odd_format" translatable="false">EU</string>
 </resources>
